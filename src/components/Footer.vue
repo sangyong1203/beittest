@@ -9,13 +9,18 @@
             <span class="footer__text-box__copy-right">Copyright © 2023 by GSIL Co., Ltd. All rights reserved.</span>
         </div>
         <div class="footer__logo-box">
-            <img src="/assets/images/gsilLogo.svg" alt="" class="footer__logo-box__logo" />
-            <img src="/assets/images/beitLogo.png" alt="" class="footer__logo-box__beit" />
+            <img :src="gsilLogo" alt="" class="footer__logo-box__logo" />
+            <img :src="beitLogo" alt="" class="footer__logo-box__beit" />
         </div>
     </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import gsilLogo from "@assets/images/gsilLogo.svg"
+import beitLogo from "@assets/images/beitLogo.png"
+
+
+</script>
 
 <style lang="scss" scoped>
 @import "@assets/styles/main.scss";

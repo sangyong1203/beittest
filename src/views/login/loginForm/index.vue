@@ -38,7 +38,6 @@
 <script setup lang="ts">
 import FormID from "../components/input.vue"
 import FormPassword from "../components/Password.vue"
-import Button from "../components/Button.vue"
 import DialogIdSearch from "./dialog/dialogIdSearch.vue"
 import ComfirmPopup from "@components/common/layout/ComfirmPopup.vue"
 import api from "@apis/selfApi"
@@ -61,13 +60,7 @@ const openDialog = (): boolean => {
 const closeDialog = (event: boolean): boolean => {
     return (isVisible.value = event)
 }
-// 페이지 라우팅
-const router = useRouter()
-const moveToPage = () => {
-    // router.push({ name: "dashboard" })
-    router.push({ name: "safefyEducation" })
 
-}
 
 const ID_InputValue = ref<string | null>("")
 const PASSWORD_InputValue = ref<string | null>("")
@@ -152,6 +145,7 @@ const login = () => {
                 store.setLoginData(params)
 
                 store.setHeaderParams()
+                console.log("stroe header", store.headerParams)
 
                 moveToPage()
             } else if (rsCode === 1002) {
@@ -162,7 +156,13 @@ const login = () => {
         })
     }
 }
+// 페이지 라우팅
+const router = useRouter()
+const moveToPage = () => {
+    router.push({ name: "dashboard" })
+    // router.push({ name: "safefyEducation" })
 
+}
 const confirmCancel = () => {
     // alert("confirmCancel")
 }

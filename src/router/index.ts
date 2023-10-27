@@ -6,11 +6,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "login",
         component: () => import("../views/login/index.vue"),
     },
-    // {
-    //     path: "/adminMain/dashboard",
-    //     name: "dashboard",
-    //     component: () => import("@views/adminMain/dashborad/index.vue"),
-    // },
+    {
+        path: "/dashboard",
+        name: "dashboard",
+        component: () => import("@views/dashboard/index.vue"),
+    },
     // // 현장관리
     // {
     //     path: "/adminMain/sceneManagement/constructionSummary",

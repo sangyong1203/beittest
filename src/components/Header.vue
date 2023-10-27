@@ -1,5 +1,5 @@
 <template>
-    <div class="header desktop">
+    <div class="header desktop" :class="store.darkMode ? 'dark-mode' : ''">
         <div class="header__main">
             <!-- <RouterLink to="/adminMain/dashboard" class="header__main__logo-box">
                 <img src="@assets/images/logo.svg" alt="" class="logo" />
@@ -18,7 +18,7 @@
             <CommonIconButton :label="'로그아웃'" :theme="'fill'" icon="logout" @send-event="logout" />
         </div>
     </div>
-    <div class="sub-header" :class="{ active: isVisibleSubHeader }" @mouseleave="isVisibleSubHeader = false">
+    <div class="sub-header" :class="{ active: isVisibleSubHeader, 'dark-mode':store.darkMode }" @mouseleave="isVisibleSubHeader = false">
         <CommonRouterMenu v-for="item in subMenuList" :key="item.label" :data="item" class="sub-header__menu" />
     </div>
 </template>

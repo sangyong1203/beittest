@@ -23,9 +23,10 @@ const instance = axios.create({
 // 요청 인터셉터 추가하기
 instance.interceptors.request.use(
     function (config:any) {
+
         let data = config.data
         let formData = new FormData()
-
+        console.log("config", data)
         if (data) {
             Object.entries(data).forEach(([key, value]) => {
                 if (key !== "files") {
@@ -63,8 +64,8 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     function (response:any) {
         let rsCode = response.data.rsCode
-
-        if (rsCode == 1002) {
+        console.log("rsCode", rsCode)
+        if (rsCode === 1002) {
             localStorage.removeItem("main")
             router.replace({ name: "login", query: { showAlert: "true" } })
         }
