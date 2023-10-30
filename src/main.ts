@@ -7,6 +7,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import "vue3-toastify/dist/index.css"
 import print from "vue3-print-nb"
+import "./assets/styles/main.scss"
 
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'

@@ -6,11 +6,11 @@
             @open-click="openDialog"
         >
             <div class="body">
-                <div class="scene-info">
-                    <div class="scene-info-item" v-for="item in data">
-                        <div v-if="item.type === 'warning'" class="scene-info-item__label" style="background-color: #78c8ff;">공지</div>
-                        <div v-if="item.type === 'news'" class="scene-info-item__label" style="background-color: #fba3b5;">뉴스</div>
-                        <div class="scene-info-item__content">
+                <div class="note-info">
+                    <div class="note-info-item" v-for="item in data">
+                        <div v-if="item.type === 'warning'" class="note-info-item__label" style="background-color: #78c8ff;">공지</div>
+                        <div v-if="item.type === 'news'" class="note-info-item__label" style="background-color: #fba3b5;">뉴스</div>
+                        <div class="note-info-item__content">
                             <a v-if="item.type === 'news'" :href="item.link" target="_blank" >{{ item.title }}</a>
                             <span v-else>{{ item.title }}</span>
                             <span style="color:#939393">{{ item.reg_date }}</span>
@@ -121,7 +121,7 @@ $HEIGHT: 54px; // 헤더 Height 값
     }
 }
 
-.scene-info {
+.note-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -130,11 +130,11 @@ $HEIGHT: 54px; // 헤더 Height 값
 
     gap: 20px;
 
-    .scene-info-item{
+    .note-info-item{
         display: flex;
         gap: 20px;
         &__label{
-            height: 20px;
+            height: 30px;
             padding: 5px 18px;
             border-radius: 6px;
             color: white;

@@ -1,6 +1,6 @@
 <template>
     <RouterLink
-        :to="data.path ? data.path : '/adminMain/dashboard'"
+        :to="data.path ? data.path : '/dashboard'"
         class="navigation-menu"
         :menu-index="data.parentIdx"
         @click="active(data.index)"

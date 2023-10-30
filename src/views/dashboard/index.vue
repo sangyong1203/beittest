@@ -145,7 +145,7 @@ window.addEventListener('resize', function() {
 // dark mode css ------------------
 :deep(.dashboard.dark-mode){
     background-color: #15202c !important;
-    background: url("@assets/images/viewMap.png");
+    // background: url("@assets/images/viewMap.png");
     background-size: cover;
     .dashboard__body {
         // background-color: #15202c !important;
@@ -159,7 +159,7 @@ window.addEventListener('resize', function() {
     .block-item{
         // background: #2b3c4e;
         background: #15202c75;
-        box-shadow: 0 0 20px #518fb461;
+        box-shadow: 0 0 8px #518fb461;
         .header {
             display: flex;
             align-items: center;

@@ -1,5 +1,5 @@
 <template>
-    <div class="footer">
+    <div class="footer" :class="store.darkMode ? 'dark-mode' : ''">
         <div class="footer__text-box">
             <span class="footer__text-box__policy">
                 <a link href="https://wpgumi.com/api/upload/policy/서비스이용약관.html" target="_blank">시스템 이용약관</a> 
@@ -18,7 +18,8 @@
 <script setup lang="ts">
 import gsilLogo from "@assets/images/gsilLogo.svg"
 import beitLogo from "@assets/images/beitLogo.png"
-
+import { useStore } from "@stores/index"
+const store = useStore()
 
 </script>
 

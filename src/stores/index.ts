@@ -51,7 +51,9 @@ export const useStore = defineStore("main", {
             darkMode: true,
             isLogin: false,
             pageFadeIn: true,
-            colors: ['#fba3b5', '#78c8ff', '#93d9d9', '#f8c089', '#ffde90', '#ba98fb', '#ffd0d9',   '#9ed7fe', '#ffcf9f', '#ffd7af', '#c6ff8d']
+            colors: ['#fba3b5', '#78c8ff', '#93d9d9', '#f8c089', '#ffde90', '#ba98fb', '#ffd0d9',   '#9ed7fe', '#ffcf9f', '#ffd7af', '#c6ff8d'],
+
+            isMenuOpen: false,
         }
     },
     getters: {
@@ -85,6 +87,7 @@ export const useStore = defineStore("main", {
         getMsdsList(): any[] {
             return this.msdsList
         }
+        
     },
     actions: {
         async setDarkMode() {
@@ -92,6 +95,9 @@ export const useStore = defineStore("main", {
         },
         async initDarkMode() {
             this.darkMode = true
+        },
+        async setMenuOpen() {
+            this.isMenuOpen = !this.isMenuOpen
         },
         async setIsLogin( data:any) {
             this.isLogin = data
