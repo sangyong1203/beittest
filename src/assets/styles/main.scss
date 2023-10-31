@@ -61,11 +61,11 @@ input:focus {
 :root {
     // --el-menu-item-height : 40px !important; // menu item 높이 조절 
     // --el-menu-item-font-size: 13px !important; // menu  글자 크기 조절 
-    --el-sub-menu-text-color:#eeeeee !important; // sub menu  글자 색상 조절 
-    --el-menu-text-color:#15202c; // sub menu  글자 크기 조절 
+    --el-menu-text-color:#15202c; //  menu  글자 색상 조절 
+    --el-sub-menu-text-color:#eeeeee; // sub menu  글자 색상 조절 
     // --el-menu-bg-color: #2e2e2e !important;
-    --el-menu-item-color: #15202c;
-    --el-menu-hover-bg-color: #888d926b !important;
+    --el-menu-item-color: #15202c; //sub menu bg color 
+    --el-menu-hover-bg-color: #888d926b !important; // menu에 mouse hover 시 색상
 }
 .el-drawer{
     --el-drawer-bg-color:var(--el-menu-bg-color) !important;

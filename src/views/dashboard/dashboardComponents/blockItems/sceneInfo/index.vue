@@ -40,6 +40,9 @@
                                     <span v-if="item.label === '풍속'"> m/s</span>
                                     <span v-if="item.label === '적설'"> %</span>
                                     <span v-if="item.label === '강수량'"> mm</span>
+                                    <span v-if="item.label === '미세먼지'"> mm</span>
+                                    <span v-if="item.label === '초미세먼지'"> mm</span>
+
                                 </span>
                             </div>
                         </div>
@@ -53,7 +56,7 @@
 <script setup lang="ts">
 import BasicLayout from "@components/common/layout/BlockBasicLayout.vue"
 
-import { computed, reactive, toRefs } from "vue"
+import { computed, reactive, toRefs, ref, onUnmounted } from "vue"
 import dayjs from "dayjs"
 import "dayjs/locale/ko" //한국어
 import { useStore } from "@stores/index"
@@ -66,11 +69,19 @@ interface Props {
     label?: string
     button: boolean
     data: any
-    current: any
 }
 const props = defineProps<Props>()
-const { label, button, data, current } = toRefs(props)
+const { label, button, data } = toRefs(props)
 
+const current = ref<string>(dayjs(new Date()).format("YYYY년 MM월 DD일 (dd) hh:mm:ss"))
+
+let timer = setInterval(()=>{
+  current.value = dayjs(new Date()).format("YYYY년 MM월 DD일 (dd) hh:mm:ss")
+
+})
+onUnmounted(() => {
+    clearInterval(timer)
+})
 // 다이얼로그 열기
 const emit = defineEmits(["send-event"])
 const openDialog = (): void => {
@@ -131,6 +142,14 @@ const weatherList = computed(() => {
         },
         {
             label: "강수량",
+            value: sceneInfo.value.Weather.weather_rain,
+        },
+        {
+            label: "미세먼지",
+            value: sceneInfo.value.Weather.weather_rain,
+        },
+        {
+            label: "초미세먼지",
             value: sceneInfo.value.Weather.weather_rain,
         },
     ]
@@ -220,7 +239,7 @@ $HEIGHT: 54px; // 헤더 Height 값
     width: 100%;
     height: calc(100% - 54px);
     display: flex;
-    padding: 0 20px;
+    padding: 20px;
     box-sizing: border-box;
 }
 
@@ -228,7 +247,6 @@ $HEIGHT: 54px; // 헤더 Height 값
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 
     width: 100%;
 
@@ -251,8 +269,6 @@ $HEIGHT: 54px; // 헤더 Height 값
         justify-content: space-between;
 
         width: calc(100% - 48px);
-
-        padding: 0 28px;
 
         gap: 40px;
 
@@ -286,8 +302,7 @@ $HEIGHT: 54px; // 헤더 Height 값
             }
 
             .today {
-                font-size: 18px;
-                line-height: 19px;
+                font-size: 20px;
                 color: $color-black-600;
             }
             .calendar {
@@ -350,8 +365,6 @@ $HEIGHT: 54px; // 헤더 Height 값
         width: 100%;
 
         &__label {
-            width: calc(100% - 20px);
-
             padding: 6px 10px;
 
             background-color: #afd2e952;
@@ -360,7 +373,7 @@ $HEIGHT: 54px; // 헤더 Height 값
             line-height: 20px;
             color: $color-blue-600;
 
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             line-height: 24px;
 
@@ -377,7 +390,7 @@ $HEIGHT: 54px; // 헤더 Height 값
                 justify-content: space-between;
                 align-items: center;
 
-                width: calc(100% - 16px);
+                width: 100%;
                 padding: 12px 8px;
 
                 border-bottom: 1px solid #e6e8ed;
@@ -385,15 +398,13 @@ $HEIGHT: 54px; // 헤더 Height 값
                 
                 &__label {
                     font-weight: 500;
-                    font-size: 18px;
-                    line-height: 20px;
+                    font-size: 20px;
                     color: $color-black-600;
                     flex-grow: 1;
                 }
                 &__value {
                     font-weight: 700;
-                    font-size: 18px;
-                    line-height: 20px;
+                    font-size: 20px;
                     color: $color-blue-600;
                 }
             }

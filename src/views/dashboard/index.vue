@@ -173,11 +173,8 @@ window.addEventListener('resize', function() {
             box-shadow: 0px 1px 5px;
             border-top-left-radius: 6px;
         }
-        .header__label{
-
-        }
         .scene-info{
-
+            
             .scene-info__weather-info__label{
                 background: #afd2e975;
                 color: #ffffff;
@@ -192,8 +189,10 @@ window.addEventListener('resize', function() {
                     color: #ffffff;
                 }
             }
-            .calendar, .today{
-                color: #ffffff;
+            .scene-info__basic-info {
+                .calendar, .today{
+                    color: #ffffff !important;
+                }
             }
         }
     }

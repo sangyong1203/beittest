@@ -4,7 +4,7 @@
             <button  class="header__button">
                 <img v-if="showButton" @click="openDialog" :src="detailBtn" alt="" class="header__button__icon" />
             </button>
-            <span class="header__label">{{ label }}</span>
+            <span class="header__label">{{ label }}<slot name="header"/></span>
             <button  class="header__button" >
             </button>
         </div>
@@ -54,7 +54,7 @@ function openDialog(){
         box-shadow: 0px 1px 1px #dddddd;
 
         &__label {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 500;
             line-height: 20px;
         }

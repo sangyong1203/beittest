@@ -1,21 +1,14 @@
 <template>
-    <Teleport to="#notification">
+    <Teleport to="#noRecordCars">
         <BasicLayout class=" block-item" 
             :label="label" 
             :show-button="button"  
             @open-click="openDialog"
         >
+            <template #header>( 총 {{data.length}}대 )</template>
             <div class="body">
-                <div class="note-info">
-                    <div class="note-info-item" v-for="item in data">
-                        <div v-if="item.type === 'warning'" class="note-info-item__label" style="background-color: #78c8ff;">공지</div>
-                        <div v-if="item.type === 'news'" class="note-info-item__label" style="background-color: #fba3b5;">뉴스</div>
-                        <div class="note-info-item__content">
-                            <a class="content-text" v-if="item.type === 'news'" :href="item.link" target="_blank" >{{ item.title }}</a>
-                            <span class="content-text" v-else>{{ item.title }}</span>
-                            <span style="color:#939393">{{ item.reg_date }}</span>
-                        </div>
-                    </div>
+                <div class="no-RecordCars">
+                    <div class="car-number" v-for="item in data">{{ item }}</div>
                 </div>
             </div>
         </BasicLayout>
@@ -53,6 +46,8 @@ const openDialog = (): void => {
 
 <style lang="scss" scoped>
 @import "@assets/styles/main.scss";
+
+$bordercolor: #895f2b;
 
 $HEIGHT: 54px; // 헤더 Height 값
 .header {
@@ -105,7 +100,7 @@ $HEIGHT: 54px; // 헤더 Height 값
 .body {
     width: 100%;
     height: calc(100% - 50px);
-    padding: 20px 30px;
+    padding: 20px;
     box-sizing: border-box;
     overflow-y: scroll;
     display: flex;
@@ -121,35 +116,26 @@ $HEIGHT: 54px; // 헤더 Height 값
     }
 }
 
-.note-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+.no-RecordCars {
+    // columns: 4;
     width: 100%;
-
-    gap: 20px;
-
-    .note-info-item{
+    height: 100%;
+    gap: 5px;
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    .car-number{
+        color: white;
+        font-size: 20px;
+        border: 1px solid $bordercolor;
+        padding: 2px;
+        width: 24%;
+        white-space: nowrap;
         display: flex;
-        gap: 20px;
-        &__label{
-            height: 30px;
-            padding: 5px 18px;
-            border-radius: 6px;
-            color: white;
-            white-space: nowrap;
-            font-size: 18px;
-        }
-        &__content{
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            .content-text {
-                text-decoration: none;
-                font-size: 20px;
-            }
-        }
+        align-items: center;
+        justify-content: center;
     }
+        
 }
 </style>

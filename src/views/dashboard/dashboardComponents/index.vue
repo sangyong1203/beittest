@@ -20,7 +20,6 @@
                 v-if="item.id==='sceneInfo'"
                     label="구미 천연가스발전소 현장"
                     :data="DashBoardObj"
-                    :current="current"
                     :button="false"
                 />
                 <Notification
@@ -33,6 +32,31 @@
                 v-if="item.id==='departureStatus'"
                     label="출역 현황"
                     :data="DashBoardObj.company_count"
+                    :button="false"
+                />
+                <HeavyEquipStatus
+                v-if="item.id==='heavyEquipStatus'"
+                    label="중장비 출입 현황"
+                    :data="DashBoardObj.equip_count"
+                    :button="false"
+                />
+                <NoRecordCars
+                v-if="item.id==='noRecordCars'"
+                    label="미등록 차량"
+                    :data="DashBoardObj.noRecordCarsData"
+                    :button="false"
+                />
+                <ViewMap
+                v-if="item.id==='viewMap'"
+                    :data="DashBoardObj.Scene_data"
+                    :area-data="DashBoardObj.AreaCount"
+                />
+                
+                 <!-- 
+                <RiskAssessment
+                v-if="item.id==='riskAssessment'"
+                    label="위험성평가 등급별 현황"
+                    :data="DashBoardObj.RA_weekly"
                     :button="true"
                 />
                 <SmartTbm
@@ -41,21 +65,10 @@
                     :data="DashBoardObj.Tbm"
                     :button="true"
                 />
-                <ViewMap
-                v-if="item.id==='viewMap'"
-                    :data="DashBoardObj.Scene_data"
-                    :area-data="DashBoardObj.AreaCount"
-                />
                 <WorkStatus
                 v-if="item.id==='workStatus'"
                     label="공종별 작업 현황"
                     :data="DashBoardObj.DP"
-                    :button="true"
-                />
-                <RiskAssessment
-                v-if="item.id==='riskAssessment'"
-                    label="위험성평가 등급별 현황"
-                    :data="DashBoardObj.RA_weekly"
                     :button="true"
                 />
                 <WorkPermit
@@ -87,7 +100,7 @@
                     label="일일 장비 사용 전 점검 현황"
                     :data="DashBoardObj.Equip"
                     :button="true"
-                />
+                /> -->
             </template>
                 
         </div>
@@ -125,18 +138,23 @@ import FcmPopup from "../popups/FcmPopup.vue"
 import SettingDialog from "../popups/settingPopup.vue"
 import settingBtn from "@assets/images/settingBtn.svg"
 
+// blocks items
 import DepartureStatus from "./blockItems/departureStatus/index.vue"
 import HeavyEquipStatus from "./blockItems/heavyEquipStatus/index.vue"
 import SceneInfo from "./blockItems/sceneInfo/index.vue"
-import DangerousWork from "./blockItems/dangerousWork/index.vue"
-import DailyEquip from "./blockItems/dailyEquip/index.vue"
-import SafetyManagement from "./blockItems/safetyManagement/index.vue"
-import SmartTbm from "./blockItems/smartTbm/index.vue"
 import Notification from "./blockItems/notification/index.vue"
+import NoRecordCars from "./blockItems/noRecordCars/index.vue"
 import ViewMap from "./blockItems/viewMap/index.vue"
-import WorkStatus from "./blockItems/workStatus/index.vue"
-import RiskAssessment from "./blockItems/riskAssessment/index.vue"
-import WorkPermit from "./blockItems/workPermit/index.vue"
+// import DangerousWork from "./blockItems/dangerousWork/index.vue"
+// import DailyEquip from "./blockItems/dailyEquip/index.vue"
+// import SafetyManagement from "./blockItems/safetyManagement/index.vue"
+// import SmartTbm from "./blockItems/smartTbm/index.vue"
+// import WorkStatus from "./blockItems/workStatus/index.vue"
+// import RiskAssessment from "./blockItems/riskAssessment/index.vue"
+// import WorkPermit from "./blockItems/workPermit/index.vue"
+
+import { getCarNumber } from "./blockItems/noRecordCars/carnumber.js"
+
 
 dayjs.locale("ko")
 provide("Chart", Chart)
@@ -148,21 +166,29 @@ const headerParams = store.headerParams
 const DashBoardObj:any = ref(null)
 
 const blockItemIds:any = ref([
-    // left part
-    {id:"sceneInfo", name:"현장정보", width: "47.9%", height: "24%"},
-    {id:"notification", name:"공지사항", width: "47.9%", height: "24%"},
-    {id:"departureStatus", name:"출역 현황", width: "47.9%", height: "24%"},
-    {id:"smartTbm", name:"스마트TBM", width: "47.9%", height: "24%"},
-    {id:"viewMap", name:"도면", width: "97.7%", height: "48.5%"},
+    {id:"sceneInfo", name:"현장정보", width: "19%", height: "32%"},
+    {id:"notification", name:"공지사항", width: "19%", height: "32%"},
+    {id:"departureStatus", name:"출역 현황", width: "19%", height: "32%"},
+    {id:"heavyEquipStatus", name:"중장비 출입", width: "19%", height: "32%"},
+    {id:"noRecordCars", name:"스마트TBM", width: "19%", height: "32%"},
+    {id:"viewMap", name:"도면", width: "100%", height: "66%"},
     
-    //right part
-    {id:"workStatus", name:"공종별 작업", width: "47.9%", height: "48.5%"},
-    {id:"riskAssessment", name:"위험성평가", width: "47.9%", height: "24%"},
-    {id:"workPermit", name:"작업허가서", width: "47.9%", height: "24%"},
-    {id:"dangerousWork", name:"고위험군 근로자", width: "47.9%", height: "24%"},
-    {id:"safetyManagement", name:"안전점검 부적합", width: "47.9%", height: "24%"},
-    {id:"heavyEquipStatus", name:"중장비 출입", width: "47.9%", height: "24%"},
-    {id:"dailyEquip", name:"일일 장비점검", width: "47.9%", height: "24%"},
+
+    // // left part
+    // {id:"sceneInfo", name:"현장정보", width: "47.9%", height: "24%"},
+    // {id:"notification", name:"공지사항", width: "47.9%", height: "24%"},
+    // {id:"departureStatus", name:"출역 현황", width: "47.9%", height: "24%"},
+    // {id:"smartTbm", name:"스마트TBM", width: "47.9%", height: "24%"},
+    // {id:"viewMap", name:"도면", width: "97.7%", height: "48.5%"},
+    
+    // //right part
+    // {id:"workStatus", name:"공종별 작업", width: "47.9%", height: "48.5%"},
+    // {id:"riskAssessment", name:"위험성평가", width: "47.9%", height: "24%"},
+    // {id:"workPermit", name:"작업허가서", width: "47.9%", height: "24%"},
+    // {id:"dangerousWork", name:"고위험군 근로자", width: "47.9%", height: "24%"},
+    // {id:"safetyManagement", name:"안전점검 부적합", width: "47.9%", height: "24%"},
+    // {id:"heavyEquipStatus", name:"중장비 출입", width: "47.9%", height: "24%"},
+    // {id:"dailyEquip", name:"일일 장비점검", width: "47.9%", height: "24%"},
 
 ])
 
@@ -279,6 +305,12 @@ function fetchApi() {
                 item.standby_cnt = Math.floor(Math.random() * 10);
             })
             DashBoardObj.value.Equip = Equip
+
+            // - Equip
+            // let noRecordCarsData = DashBoardObj.value.noRecordCarsData
+            let noRecordCarsData:any = getCarNumber().slice(0, 30)
+            
+            DashBoardObj.value.noRecordCarsData = noRecordCarsData
         } 
         
 
@@ -354,14 +386,6 @@ function openSetting(){
     settingDialogRef.value.openDialog(blockItemIds.value)
 }
 
-// 현장정보 날짜 초기화
-const date = ref<Date>(new Date())
-const current = ref<string>(dayjs(date.value).format("YYYY년 MM월 DD일 (dd)"))
-const init = () => {
-    date.value = new Date()
-    current.value = dayjs(date.value).format("YYYY년 MM월 DD일 (dd)")
-}
-
 // 공통 다이얼로그 열기
 const emit = defineEmits(["open-dialog", "open-release", "get-push-data"])
 const openDialog = (data: any): void => {
@@ -376,10 +400,8 @@ const timer: any = []
 onMounted(() => {
 
     fetchApi()
-    init()
 
     timer.push(setInterval(fetchApi, 10000))
-    timer.push(setInterval(init, 180000))
 
     store.setCompanyList() // 업체 dropdown 세팅
     store.setCtgoMsdsList() // 구분 msds  dropdown 세팅
@@ -422,16 +444,16 @@ $GAP: 16px;
     
 
     &__body {
-        columns: 2;
         width: 100%;
         height: 100%;
-        column-gap: 0px;
         padding: 12px 42px 0px 42px;
         box-sizing: border-box;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
-    // :deep(.header__button){
-    //     display: none;
-    // }
+ 
     :deep(.basic-layout){
         width: 100%;
         height: 100%;

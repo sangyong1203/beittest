@@ -1,79 +1,95 @@
 <template>
     <Teleport to="#viewMap">
         <div class="view-map">
-            <img v-if="map==='조감도'" src="@assets/images/viewMap.png" alt="" class="view-map__image" />
-            <img v-if="map==='드론'" :src="data.scene_file" alt="" class="view-map__image" />
-            <img v-if="map==='도면'" style="width:100%; height: 100%;background: #151f27a6;" src="@assets/images/viewMap3.png" alt="" class="view-map__image" />
-            <!-- <img v-if="map==='도면'" style="width:100%; height: 100%;" src="@assets/images/viewMap3.png" alt="" class="view-map__image" /> -->
 
-            <div v-if="map==='도면'" class="mapZone">
-
-                <div class="zone-box">
-                    <div class="zone" v-for="zone in areaData" :id="'area'+ zone.area_id">
-                        <span>{{ zone.area_main }} </span>
-                        <span class="workCount">{{ zone.work_cnt }}명</span>
-                    </div>
-                    <div class="zone" id="area126">수처리/페수처리건물</div>
-                    <div class="zone" id="area127">페수처리건물</div>
-                    <div class="zone" id="area128">종합창고건물</div>
-                    <div class="zone" id="area129">종합창사무실</div>
-                    <div class="zone" id="area130">페수처리시설</div>
-                    <div class="zone" id="area131">기계<br/>공작실</div>
-                    <div class="zone" id="area132">순수저장탱크</div>
-                    <div class="zone" id="area133">응죽수<br/>저장탱크</div>
-                    <div class="zone" id="area134">방호벽</div>
-                    <div class="zone" id="area135">서비스<br/>가스장소</div>
-                    <div class="zone" id="area136">15KV GIS</div>
-                    <div class="zone" id="area137">Area27</div>
-                    <div class="zone" id="area138">LNG GS</div>
-                    <div class="zone" id="area139">Area39</div>
-                    <div class="zone" id="area140">가열공간</div>
-                    <div class="zone" id="area141">종합사무실</div>
-                    <div class="zone" id="area142">보일러</div>
-                    <div class="zone" id="area143">소방펌프</div>
-
-
+            
+            <div class="workers">
+                <div class="title">작업자( 총: {{dataList.length}}명 )</div>
+                <div class="workers-content">
+                    <div class="workers-name" v-for="item in dataList">{{ item.worker_name }}</div>
                 </div>
             </div>
-
-
-            <div class="map-buttons" :class="{'dark-mode':store.darkMode}">
-
-                <div class="mapBtn" @click="changeView('조감도')">조감도</div>|
-                <div class="mapBtn" @click="changeView('드론')">드론</div>|
-                <div class="mapBtn" @click="changeView('도면')">도면</div>
+            <!-- <div class="equips">
+                <div class="title">작업자( 총: {{dataList.length}}명 )</div>
+                <div class="equips-content">
+                    <div class="equips-number" v-for="item in dataList"><span class="index">{{ item.area_name }} </span> {{ item.worker_name }}</div>
+                </div>
+            </div> -->
+            
+            <div class="equips1">
+                <div class="title">장비( 총: {{carNumberList.length}}대 )</div>
+                <div class="equips-content">
+                    <div class="equips-number" v-for="item in carNumberList">
+                        <span class="area-num">#{{ item.area_id }}</span>
+                        <span class="item-name">{{ item.equip_name }}</span></div>
+                </div>
             </div>
-    
+            <div class="mapZone">
+                <div class="mapZone-title">
+                    <div class="zone-title" sytle="background: #296436;">200m(구역1)</div>
+                    <div class="zone-title" sytle="background: #717a1a;">400m(구역2)</div>
+                    <div class="zone-title" sytle="background: #76650c;">600m(구역3)</div>
+                    <div class="zone-title" sytle="background: #763e0c;">800m(구역4)</div>
+                    <div class="zone-title" sytle="background: #933344;">1000m(구역5)</div>
+                    <div class="zone-title" sytle="background: #760c61;">1200m(구역6)</div>
+                    <div class="zone-title" sytle="background: #561c9b;">1400m(구역7)</div>
+                    <div class="zone-title" sytle="background: #0c3276;">1600m(구역8)</div>
+                    <div class="zone-title" sytle="background: #0c6476;">1800m(구역9)</div>
+                </div>
+                <div class="mapZone-box " style="border: 5px solid #d5e30752; background: #efff0029;">
+                    <div class="zone" v-for="areaNum in 9">
+                        <div class="zone-content" >
+                            <template v-for="item in dataList">
+                                <div v-if="item.area_id === areaNum" class="zone-name zone1-item" >{{ item.worker_name  }}</div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                <div class="mapZone-box " style="border: 5px solid #388138; background: #38813847;">
+                    <div class="zone" v-for="areaNum in 9">
+                        <div class="zone-content" >
+                            <template v-for="item in dataList">
+                                <div v-if="item.area_id === areaNum" class="zone-name zone2-item" >{{ item.worker_name  }}</div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </Teleport>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onUpdated } from "vue"
 import {useStore} from "@stores/index" 
-
+import { getCarNumber } from "./carnumber";
+import { getWorkerName } from "./workernames";
 const store = useStore()
 interface Props {
     data: any
-    areaData: any
 }
-const {} = defineProps<Props>()
-const map:any = ref('조감도')
-function changeView( type:string) {
-        map.value = type
-}
+const { data } = defineProps<Props>()
+const dataList = getWorkerName()
+const carNumberList = getCarNumber().slice(0, 25)
+const workerInsideNum = getWorkerName().slice(0, 40)
+
 </script>
 
 <style lang="scss" scoped>
 @import "@assets/styles/main.scss";
 
+// $bordercolor: #518fb461;
+$bordercolor: #2d3438;
+// $bordercolor: #15202c;
 .view-map {
+    gap: 5px;
     display: flex;
     align-items: center;
     overflow: hidden;
     border-radius: 6px;
     &__image {
         width: 100%;
+        height: 100%;
     }
     width:100%;
     height: 100%;
@@ -85,7 +101,162 @@ function changeView( type:string) {
     border: 2px solid #18283261;
     box-sizing: border-box;
 }
+.workers{
+    width: 300px;
+    height: 100%;
+    border: 1px solid $bordercolor;
+    border-radius: 5px;
 
+    // background: #2d3438;
+    .title{
+        color: #dddddd;
+        height: 40px;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid $bordercolor;
+    }
+    .workers-content{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0px;
+        height: calc(100% - 45px);
+        overflow: hidden;
+        padding: 3px 0;
+        justify-content: space-evenly;
+    }
+    .workers-name{
+        width: 49%;
+        height: 5%;
+        color: #dddddd;
+        font-size: 22px;
+        border: 1px solid $bordercolor;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap; 
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        background: #070b0e;
+    }
+}
+
+.equips1{
+    width: 230px;
+    height: 100%;
+    border: 1px solid $bordercolor;
+    border-radius: 5px;
+
+    // background: #2d3438;
+    .title{
+        color: #dddddd;
+        height: 40px;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid $bordercolor;
+    }
+    .equips-content{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0px;
+        height: calc(100% - 45px);
+        overflow: hidden;
+        padding: 3px 0;
+        justify-content: space-evenly;
+    }
+    .equips-number{
+        width: 100%;
+        height: 5%;
+        border: 1px solid $bordercolor;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        white-space: nowrap; 
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        background: #070b0e;
+        span{
+            color: #dddddd;
+            font-size: 22px;
+        }
+        .area-num{
+            width: 20%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 2px solid #2d3438;
+        }
+        .item-name{
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+.equips{
+    width: 230px;
+    height: 100%;
+    border: 3px solid $bordercolor;
+    border-radius: 5px;
+
+    background: #2d3438;
+
+    .title{
+        color: #dddddd;
+        height: 40px;
+        font-size: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 3px solid $bordercolor;
+    }
+    .equips-content{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+        height: calc(100% - 45px);
+        padding: 4px;
+        overflow: hidden;
+    }
+    .equips-number{
+        width: 100%;
+        color: white;
+        font-size: 22px;
+        border: 1px solid $bordercolor;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap; 
+        text-overflow: ellipsis;
+        overflow: hidden;
+        // width: 100%;
+        // color: #dddddd;
+        // font-size: 22px;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // white-space: nowrap;
+        // overflow: hidden;
+        // // background: #919130;
+        // border-radius: 3px;
+        // padding: 2px;
+        // border-bottom: 3px solid $bordercolor;
+        // .index{
+        //     width:20px; 
+        //     height:20px;
+        // }
+        background: #070b0e;
+
+    }
+}
 .map-buttons{
     width: 260px;
     height: 35px;
@@ -117,259 +288,159 @@ function changeView( type:string) {
 .mapBtn:hover {
     background-color: #15202c;
     height: 100%;
-    color: white;
+    color: #dddddd;
 }
 
 .mapZone{
-    width: 100%;
+    flex: 1;
     height: 100%;
-    position: absolute;
     box-sizing: border-box;
-    padding: 5px;
-    // border: 1px solid #ffffff;
-    border-radius: 6px;
-    
-    .zone-box{
-        // background-image: url("@assets/images/viewMap3.jpg");
-        opacity: 0.8;
-        width: 100%;
-        height: 100%;
-        border-radius: 4px;
-        // border: 1px solid #b7b7b7;
-        box-sizing: border-box;
+    // padding: 5px;
+    // border: 1px solid $bordercolor;
+    // border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .mapZone-box{
+        display: flex;
+        border: 1px solid $bordercolor;
+        border-radius: 5px;
+        height: calc(50% - 27px);
     }
-    .zone{
-        // border: 1px solid #b7b7b7;
-        color: #ffffff;
-        border-radius: 10px;
+    .mapZone-title{
         display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        text-align: center;
-        // background-color: #15202c;
-        background-color: #14449c;
-        display: flex;
-        flex-direction: column;
-        gap:5px;
-        span {
+        border: 1px solid $bordercolor;
+        border-radius: 5px;
+        height: 44px;
+
+
+        .zone-title{
+            color: #dddddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid $bordercolor;
+            width: 100%;
             font-size: 20px;
-            color: #ffffff;
-            text-align: center;
+            font-weight: 600;
+            background-color: #296436;
         }
-        .workCount{
-            font-size: 24px;
-            color: #ff6161 !important;
-            font-weight: 700;
+    }
+
+
+    .zone{
+        display: flex;
+        flex: 1;
+        height: 100%;
+        border: 1px solid $bordercolor;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+       .zone-content{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            height: 100%;
+            width: 100%;
+            padding: 5px;
+            align-content: flex-start;
         }
+        .zone-name{
+            // width: 48%;
+            // color: white;
+            // font-size: 22px;
+            // border: 1px solid $bordercolor;
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
+            // white-space: nowrap; 
+            // text-overflow: ellipsis;
+            // overflow: hidden;
+            color: #dddddd;
+            font-size: 20px;
+            background: #586c71;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            padding: 3px;
+            width: 48%;
+            overflow: hidden;
+            height: 30px;
+        }
+        .zone1-item{
+
+        }
+        .zone2-item{
+
+        }
+
     }
 }
 
-//ST
-#area119{
+#구역1{
     position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    bottom: 28.5%;
-    left: 51%;
+    top: 82%;
+    left: 4%;
+    z-index: 11;
 }
-// GT
-#area120{
+#구역2{
     position: absolute;
-    width: 8.5%;
-    height: 12%;
-    top: 35%;
-    left: 53%;
+    top: 72%;
+    left: 16%;
+    z-index: 12;
 }
-// HRSG 
-#area121{
+#구역3{
     position: absolute;
-    width: 8%;
-    height: 13%;
-    top: 36%;
-    left: 40%;
+    top: 29%;
+    left: 9%;
+    z-index: 16;
+
 }
-// 송전선로 
-#area122{
+#구역4{
     position: absolute;
-    width: 6.5%;
-    height: 27.5%;
-    top: 13.5%;
-    left: 77.5%;
+    top: 8%;
+    left: 15%;
+    z-index: 14;
 }
-// 냉각탑 
-#area123{
+#구역5{
     position: absolute;
-    width: 4%;
-    height: 41%;
-    top: 26%;
-    left: 27.5%;
+    top: 20%;
+    left: 25%;
+    z-index: 15;
+}   
+#구역6{
+    position: absolute;
+    top: 37%;
+    left: 29%;
+    z-index: 16;
 }
-// 주제어동 
-#area124{
+#구역7{
     position: absolute;
-    width: 5.5%;
-    height: 10.5%;
-    bottom: 5%;
-    left: 41.5%;
-}
-// 현장내
-#area125{
-    position: absolute;
-    width: 5.5%;
-    height: 7%;
-    bottom: 39%;
-    left: 9.5%;
+    top: 84%;
+    left: 29%;
+    z-index: 17;
 }
 // 페수처리건물
-#area126{
+#구역8{
     position: absolute;
-    width: 16%;
-    height: 13%;
-    bottom: 4%;
-    left: 55%;
+    top: 77%;
+    left: 66%;
+    z-index: 18;
 }
 // 페수처리건물
-#area127{
+#구역9{
     position: absolute;
-    width: 13.5%;
-    height: 11.5%;
-    bottom: 7.5%;
-    left: 18.5%;
+    top: 65%;
+    left: 65%;
+    z-index: 19;
 }
 // 종합창고건물
-#area128{
+#구역10{
     position: absolute;
-    width: 2.8%;
-    height: 19%;
-    bottom: 5.5%;
-    left: 89%;
-}
-// 종합창사무실
-#area129{
-    position: absolute;
-    width: 4%;
-    height: 10%;
-    bottom: 32%;
-    left: 88%;
-}
-// 페수처리시설
-#area130{
-    position: absolute;
-    width: 5%;
-    height: 2%;
-    top: 80.5%;
-    left: 74.5%;
-}
-// 기계공작실
-#area131{
-    position: absolute;
-    width: 3.5%;
-    height: 8%;
-    top: 58%;
-    left: 77.5%;
-}
-// 순수저장탱크
-#area132{
-    position: absolute;
-    width: 7%;
-    height: 1%;
-    top: 48%;
-    left: 77.5%;
-}
-
-
-// Zone14
-#area133{
-    position: absolute;
-    width: 5%;
-    height: 4%;
-    top: 46%;
-    left: 66%;
-}
-
-// Zone6
-#area134{
-    position: absolute;
-    width: 4%;
-    height: 2%;
-    top: 34%;
-    left: 67%;
-}
-
-// Zone26
-#area135{
-    position: absolute;
-    width: 4.5%;
-    height: 2%;
-    top: 23%;
-    left: 67%;
-}
-
-// Zone9
-#area136{
-    position: absolute;
-    width: 11%;
-    height: 6%;
-    top: 8%;
-    left: 49%;
-}
-
-// Zone27
-#area137{
-    position: absolute;
-    width: 4%;
-    height: 2%;
-    top: 12%;
-    left: 40%;
-}
-
-// Zone34
-#area138{
-    position: absolute;
-    width: 5.6%;
-    height: 3.5%;
-    top: 38%;
-    left: 11%;
-}
-// Zone
-#area139{
-    position: absolute;
-    width: 2%;
-    height: 5%;
-    top: 21%;
-    left: 19.5%;
-}
-// Zone
-#area140{
-    position: absolute;
-    width: 5%;
-    height: 1.5%;
-    top: 25%;
-    left: 56%;
-}
-// 종합사무실
-#area141{
-    position: absolute;
-    width: 6%;
-    height: 9.5%;
-    top: 78%;
-    left: 7%;
-}
-// 보일러
-#area142{
-    position: absolute;
-    width: 4.5%;
-    height: 1%;
-    top: 56%;
-    left: 39%;
-}
-// 보일러
-#area143{
-    position: absolute;
-    width: 2.5%;
-    height: 1%;
-    top: 14%;
-    left: 71%;
+    top: 53%;
+    left: 58%;
+    z-index: 20;
 }
 </style>
+./workernames

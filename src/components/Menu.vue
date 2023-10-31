@@ -2,7 +2,7 @@
   <el-drawer 
       v-model="store.isMenuOpen" 
       direction="ltr" 
-      size="280"
+      size="240"
       :show-close="false"
       :with-header="false"
       @closed="handleClose"
@@ -94,7 +94,6 @@
 
 .el-menu-vertical-demo {
   background-color: var(--el-menu-bg-color);
-  padding:10px 0;
   height: calc(100% - 55px);
   width: 100%;
 }
@@ -137,7 +136,7 @@
   justify-content: center;
   display: flex;
   transition: all 0.3s ease-in-out;
-  padding: 12px 0;
+  padding: 20px 0 10px;
   img{
     width: 80px;
   }

@@ -8,7 +8,7 @@
             <div class="body">
                 <div class="donut-graph">
                     <div class="donut-graph__content">
-                        <DashboardCompanyChart :data="data"  />
+                        <DashboardCompanyChart :data="data" style="width: 160px; height: 160px;"/>
                         <DashboardContent :label="'중장비별'" :data="data" />
                     </div>
                 </div>

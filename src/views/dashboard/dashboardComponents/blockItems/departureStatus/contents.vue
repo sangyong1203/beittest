@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <div class="content__label-box">
+        <!-- <div class="content__label-box">
             <span class="content__label-box__label">{{ label }}</span>
-        </div>
+        </div> -->
         <div class="content__list-box">
             <span v-if="data.length === 0" class="content__list-box__no-data">출역 인원이 없습니다.</span>
             <div v-for="item in data" :key="item.company" class="content__list-box__list">
@@ -11,7 +11,7 @@
                     <span class="name-box__name">{{ item.company_name }}</span>
                 </div>
                 <div class="value-box">
-                    <span class="value">{{ item.cnt }}</span>
+                    <span class="value-box__value">{{ item.cnt }}</span>
                     <span style="margin-left: 2px">명</span>
                 </div>
             </div>
@@ -53,8 +53,8 @@ function addColortoContent(){
 .content {
     display: flex;
     flex-direction: column;
-
-    height: 180px;
+    gap: 15px;
+    height: 100%;
 
     &__label-box {
         display: flex;
@@ -80,8 +80,8 @@ function addColortoContent(){
 
         width: 100%;
         height: 100%;
-        gap: 15px;
-        margin-top: 16px;
+        gap: 8px;
+        margin-top: 5px;
 
         overflow-y: scroll;
 
@@ -99,13 +99,15 @@ function addColortoContent(){
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 18px;
-            gap: 10px;
+            font-size: 22px;
+            gap: 15px;
             .name-box {
                 display: flex;
                 align-items: center;
                 font-size: inherit;
                 gap: 12px;
+                max-width: 180px;
+                white-space: nowrap;
 
                 &__chip {
                     width: 12px;
@@ -115,29 +117,11 @@ function addColortoContent(){
                 }
                 &__name {
                     font-size: inherit;
-                    // @include laptop() {
-                    //     width: 60px;
-
-                    //     overflow: hidden;
-                    //     white-space: nowrap;
-                    //     text-overflow: ellipsis;
-
-                    //     font-size: 15px;
-                    // }
-                    // @include tablet() {
-                    //     width: 60px;
-
-                    //     overflow: hidden;
-                    //     white-space: nowrap;
-                    //     text-overflow: ellipsis;
-                    // }
                 }
             }
             .value-box {
                 &__value {
-                    font-weight: 700;
-                    font-size: inherit;
-                    line-height: 19px;
+                    font-size: 20px;
                     color: $color-blue-600;
                 }
             }
