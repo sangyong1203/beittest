@@ -6,50 +6,78 @@
             <div class="workers">
                 <div class="title">작업자( 총: {{dataList.length}}명 )</div>
                 <div class="workers-content">
-                    <div class="workers-name" v-for="item in dataList">{{ item.worker_name }}</div>
+                    <div class="workers-name" v-for="item in dataList">
+                        <span class="area-num" :style="{backgroundColor: getColor(item.area_id)}">{{ item.area_id }}</span>
+                        <span class="item-name">{{ item.worker_name }}</span>
+                    </div>
                 </div>
             </div>
-            <!-- <div class="equips">
+
+            <!-- 작업자 -->
+            <!-- <div class="equips1" >
                 <div class="title">작업자( 총: {{dataList.length}}명 )</div>
                 <div class="equips-content">
-                    <div class="equips-number" v-for="item in dataList"><span class="index">{{ item.area_name }} </span> {{ item.worker_name }}</div>
+                    <div class="equips-number" v-for="(item, index) in workerList">
+                        <span class="area-num">{{ (index + 1) + workerListCounter*10  }}</span>
+                        <span class="item-name">{{ item.worker_name }}</span>
+                    </div>
                 </div>
             </div> -->
             
+            <!-- --------- -->
+
+            <!-- 장비 -->
             <div class="equips1">
                 <div class="title">장비( 총: {{carNumberList.length}}대 )</div>
                 <div class="equips-content">
-                    <div class="equips-number" v-for="item in carNumberList">
-                        <span class="area-num">#{{ item.area_id }}</span>
-                        <span class="item-name">{{ item.equip_name }}</span></div>
+                    <div class="equips-number" v-for="(item, index) in carNumberList">
+                        <span class="area-num">{{ index+1 }}</span>
+                        <span class="item-name">{{ item.equip_name }}</span>
+                    </div>
                 </div>
             </div>
             <div class="mapZone">
                 <div class="mapZone-title">
-                    <div class="zone-title" sytle="background: #296436;">200m(구역1)</div>
-                    <div class="zone-title" sytle="background: #717a1a;">400m(구역2)</div>
-                    <div class="zone-title" sytle="background: #76650c;">600m(구역3)</div>
-                    <div class="zone-title" sytle="background: #763e0c;">800m(구역4)</div>
-                    <div class="zone-title" sytle="background: #933344;">1000m(구역5)</div>
-                    <div class="zone-title" sytle="background: #760c61;">1200m(구역6)</div>
-                    <div class="zone-title" sytle="background: #561c9b;">1400m(구역7)</div>
-                    <div class="zone-title" sytle="background: #0c3276;">1600m(구역8)</div>
-                    <div class="zone-title" sytle="background: #0c6476;">1800m(구역9)</div>
+                    <div class="zone-title" style="background: #296436;">200m(구역1)</div>
+                    <div class="zone-title" style="background: #717a1a;">400m(구역2)</div>
+                    <div class="zone-title" style="background: #76650c;">600m(구역3)</div>
+                    <div class="zone-title" style="background: #763e0c;">800m(구역4)</div>
+                    <div class="zone-title" style="background: #933344;">1000m(구역5)</div>
+                    <div class="zone-title" style="background: #760c61;">1200m(구역6)</div>
+                    <div class="zone-title" style="background: #561c9b;">1400m(구역7)</div>
+                    <div class="zone-title" style="background: #0c3276;">1600m(구역8)</div>
+                    <div class="zone-title" style="background: #0c6476;">1800m(구역9)</div>
                 </div>
-                <div class="mapZone-box " style="border: 5px solid #d5e30752; background: #efff0029;">
+                <div class="mapZone-box " style="border: 8px solid #d5e30752;">
                     <div class="zone" v-for="areaNum in 9">
                         <div class="zone-content" >
-                            <template v-for="item in dataList">
-                                <div v-if="item.area_id === areaNum" class="zone-name zone1-item" >{{ item.worker_name  }}</div>
+                            <template v-for="item in inAreaWorkerList">
+                                <div v-if="item.area_id === areaNum" class="zone-item">
+                                    <div v-if="item.equip_name" class="zone-name equip-item">
+                                        <div style="background: #efff0029;">{{ item.equip_name  }}</div>
+                                        <div>{{ item.worker_name  }}</div>
+                                    </div>
+                                    <div v-else class="zone-name worker-item">
+                                        {{ item.worker_name  }}
+                                    </div>
+                                </div>
                             </template>
                         </div>
                     </div>
                 </div>
-                <div class="mapZone-box " style="border: 5px solid #388138; background: #38813847;">
+                <div class="mapZone-box " style="border: 8px solid #337633b0; ">
                     <div class="zone" v-for="areaNum in 9">
                         <div class="zone-content" >
-                            <template v-for="item in dataList">
-                                <div v-if="item.area_id === areaNum" class="zone-name zone2-item" >{{ item.worker_name  }}</div>
+                            <template v-for="item in inAreaWorkerList">
+                                <div v-if="item.area_id === areaNum" class="zone-item">
+                                    <div v-if="item.equip_name" class="zone-name equip-item">
+                                        <div style="background: #efff0029;">{{ item.equip_name  }}</div>
+                                        <div>{{ item.worker_name  }}</div>
+                                    </div>
+                                    <div v-else class="zone-name worker-item">
+                                        {{ item.worker_name  }}
+                                    </div>
+                                </div>
                             </template>
                         </div>
                     </div>
@@ -60,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUpdated } from "vue"
+import { ref, onMounted } from "vue"
 import {useStore} from "@stores/index" 
 import { getCarNumber } from "./carnumber";
 import { getWorkerName } from "./workernames";
@@ -70,9 +98,57 @@ interface Props {
 }
 const { data } = defineProps<Props>()
 const dataList = getWorkerName()
-const carNumberList = getCarNumber().slice(0, 25)
-const workerInsideNum = getWorkerName().slice(0, 40)
+const carNumberList = getCarNumber().slice(0, 20)
+const inAreaWorkerList:any = ref([])
 
+onMounted(()=>{
+    setInAreaWorkerList(dataList)
+})
+function setInAreaWorkerList(list:any){
+    let arr:any = []
+    list.forEach((item:any)=>{
+        if(item.equip_name){
+            arr.unshift(item)
+        }else{
+            arr.push(item)
+        }
+    })
+    inAreaWorkerList.value = arr
+}
+
+function getColor(area_id:number){
+    let color =""
+    switch(area_id){
+        case 1:
+            color = "#296436"
+            break
+        case 2:
+            color = "#717a1a"
+            break
+        case 3:
+            color = "#76650c"
+            break
+        case 4:
+            color = "#763e0c"
+            break
+        case 5:
+            color = "#933344"
+            break
+        case 6:
+            color = "#760c61"
+            break
+        case 7:
+            color = "#561c9b"
+            break
+        case 8:
+            color = "#0c3276"
+            break
+        case 9:
+            color = "#0c6476"
+            break
+    }
+    return color
+}
 </script>
 
 <style lang="scss" scoped>
@@ -94,9 +170,6 @@ $bordercolor: #2d3438;
     width:100%;
     height: 100%;
     position: relative;
-
-    // box-shadow: 0px 0px 5px #15202c;
-    // border: 1px solid #15202cae;
     box-shadow: 0px 0px 5px #518fb461;
     border: 2px solid #18283261;
     box-sizing: border-box;
@@ -107,7 +180,6 @@ $bordercolor: #2d3438;
     border: 1px solid $bordercolor;
     border-radius: 5px;
 
-    // background: #2d3438;
     .title{
         color: #dddddd;
         height: 40px;
@@ -116,6 +188,8 @@ $bordercolor: #2d3438;
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid $bordercolor;
+        background: #141e29;
+
     }
     .workers-content{
         display: flex;
@@ -124,13 +198,12 @@ $bordercolor: #2d3438;
         height: calc(100% - 45px);
         overflow: hidden;
         padding: 3px 0;
-        justify-content: space-evenly;
+        justify-content: flex-start;
     }
     .workers-name{
-        width: 49%;
-        height: 5%;
+        width: 33.3%;
         color: #dddddd;
-        font-size: 22px;
+        font-size: 18px;
         border: 1px solid $bordercolor;
         display: flex;
         justify-content: center;
@@ -138,8 +211,14 @@ $bordercolor: #2d3438;
         white-space: nowrap; 
         text-overflow: ellipsis;
         overflow: hidden;
-
+        gap: 3px;
         background: #070b0e;
+        .area-num{
+            width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 }
 
@@ -158,12 +237,13 @@ $bordercolor: #2d3438;
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid $bordercolor;
+        background: #141e29;
     }
     .equips-content{
         display: flex;
         flex-wrap: wrap;
         gap: 0px;
-        height: calc(100% - 45px);
+        height: calc(100% - 36px);
         overflow: hidden;
         padding: 3px 0;
         justify-content: space-evenly;
@@ -237,22 +317,6 @@ $bordercolor: #2d3438;
         white-space: nowrap; 
         text-overflow: ellipsis;
         overflow: hidden;
-        // width: 100%;
-        // color: #dddddd;
-        // font-size: 22px;
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
-        // white-space: nowrap;
-        // overflow: hidden;
-        // // background: #919130;
-        // border-radius: 3px;
-        // padding: 2px;
-        // border-bottom: 3px solid $bordercolor;
-        // .index{
-        //     width:20px; 
-        //     height:20px;
-        // }
         background: #070b0e;
 
     }
@@ -264,13 +328,10 @@ $bordercolor: #2d3438;
     background: #00132191;
     display: flex;
     align-items: center;
-    // border: 2px solid #c3c2c2;
     border-radius: 6px;
     right: 2px;
     bottom: 2px;
     margin: 5px;
-    // background-color: #9ad0f5;
-    // color: #dddddd;
     font-size: 22px;  
     color: #dddddd;
 }
@@ -337,41 +398,49 @@ $bordercolor: #2d3438;
         align-items: center;
         overflow: hidden;
        .zone-content{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
+            // display: flex;
+            // flex-wrap: wrap;
+            // align-content: flex-start;
+
+            gap: 3px;
             height: 100%;
             width: 100%;
             padding: 5px;
-            align-content: flex-start;
+
+        }
+        .zone-item{
+            max-width: 31.5%;
+            min-width: 23%;
+            float: left;
+            margin: 2px;
         }
         .zone-name{
-            // width: 48%;
-            // color: white;
-            // font-size: 22px;
-            // border: 1px solid $bordercolor;
-            // display: flex;
-            // justify-content: center;
-            // align-items: center;
-            // white-space: nowrap; 
-            // text-overflow: ellipsis;
-            // overflow: hidden;
             color: #dddddd;
-            font-size: 20px;
+            font-size: 18px;
             background: #586c71;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 4px;
-            padding: 3px;
-            width: 48%;
+            padding: 2px;
             overflow: hidden;
-            height: 30px;
+            flex-direction: column;
+            div{
+                color: #dddddd;
+                padding: 2px;
+            }
         }
-        .zone1-item{
-
+        .equip-item{
+            border: 1px solid;
+            width: 100%;
+            padding: 2px;
+            font-size: 18px;
+            div{
+                white-space: nowrap;
+                overflow: hidden;
+            }
         }
-        .zone2-item{
+        .worker-item{
 
         }
 

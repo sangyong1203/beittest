@@ -129,8 +129,8 @@ $HEIGHT: 54px; // 헤더 Height 값
         color: white;
         font-size: 20px;
         border: 1px solid $bordercolor;
-        padding: 2px;
-        width: 24%;
+        padding: 3px;
+        width: 32%;
         white-space: nowrap;
         display: flex;
         align-items: center;

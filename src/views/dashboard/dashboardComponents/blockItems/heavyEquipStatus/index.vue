@@ -130,7 +130,7 @@ $HEIGHT: 54px; // 헤더 Height 값
         justify-content: space-around;
         width: 100%;
         height: 100%;
-
+        gap: 10px;
     }
 }
 </style>

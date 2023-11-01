@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import CommonIconButton from "@components/common/button/IconButton.vue"
-import logo from "@assets/images/beitLogo.png"
+import logo from "@assets/images/logo_doosan.png"
 
 import { useRouter } from "vue-router"
 import { useStore } from "@stores/index"
@@ -101,7 +101,7 @@ const logout = () => {
     &__profile-box {
         display: flex;
         align-items: center;
-
+        justify-content: space-between;
         height: 100%;
         width: 276px;
 

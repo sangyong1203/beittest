@@ -100,13 +100,13 @@ function addColortoContent(){
             align-items: center;
             justify-content: space-between;
             font-size: 22px;
-            gap: 15px;
+            gap: 10px;
+            width: 100%;
             .name-box {
                 display: flex;
                 align-items: center;
                 font-size: inherit;
                 gap: 12px;
-                max-width: 180px;
                 white-space: nowrap;
 
                 &__chip {
@@ -117,11 +117,17 @@ function addColortoContent(){
                 }
                 &__name {
                     font-size: inherit;
+                    overflow: hidden;
+                    flex: 1;
                 }
             }
             .value-box {
+                width: 50px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: flex-end;
                 &__value {
-                    font-size: 20px;
+                    font-size: 22px;
                     color: $color-blue-600;
                 }
             }

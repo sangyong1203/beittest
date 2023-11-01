@@ -379,10 +379,11 @@ $HEIGHT: 54px; // 헤더 Height 값
 
         }
         &__data-box {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
 
             gap: 0 32px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
 
             .data {
                 display: flex;
@@ -390,21 +391,21 @@ $HEIGHT: 54px; // 헤더 Height 값
                 justify-content: space-between;
                 align-items: center;
 
-                width: 100%;
-                padding: 12px 8px;
+                width: 45%;
+                padding: 18px 8px;
 
                 border-bottom: 1px solid #e6e8ed;
 
                 
                 &__label {
                     font-weight: 500;
-                    font-size: 20px;
+                    font-size: 22px;
                     color: $color-black-600;
                     flex-grow: 1;
                 }
                 &__value {
                     font-weight: 700;
-                    font-size: 20px;
+                    font-size: 22px;
                     color: $color-blue-600;
                 }
             }

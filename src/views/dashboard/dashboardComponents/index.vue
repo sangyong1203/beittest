@@ -308,7 +308,7 @@ function fetchApi() {
 
             // - Equip
             // let noRecordCarsData = DashBoardObj.value.noRecordCarsData
-            let noRecordCarsData:any = getCarNumber().slice(0, 30)
+            let noRecordCarsData:any = getCarNumber().slice(0, 20)
             
             DashBoardObj.value.noRecordCarsData = noRecordCarsData
         } 

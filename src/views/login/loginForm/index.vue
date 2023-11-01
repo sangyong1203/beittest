@@ -1,7 +1,7 @@
 <template>
     <div class="form">
         <div class="form__title">
-            <img src="@assets/images/beitLogo.png" alt="" class="form__title__image" />
+            <img src="@assets/images/logo_doosan.png" alt="" class="form__title__image" />
             <span class="form__title__text">안전에 스마트를 더하다</span>
         </div>
         <div class="form__input-box">

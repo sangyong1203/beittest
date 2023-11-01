@@ -9,7 +9,7 @@
                 <div class="donut-graph">
                     <div class="donut-graph__content">
                         <DashboardCompanyChart :data="data" style="width: 160px; height: 160px;"/>
-                        <DashboardContent :label="'업체별'" :data="data" />
+                        <DashboardContent :label="'업체별'" :data="data" style="width: 40%;"/>
                     </div>
                 </div>
             </div>
@@ -132,7 +132,7 @@ $HEIGHT: 54px; // 헤더 Height 값
         justify-content: space-around;
         width: 100%;
         height: 100%;
-
+        gap: 10px;
     }
 }
 </style>
