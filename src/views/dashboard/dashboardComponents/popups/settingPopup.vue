@@ -3,7 +3,8 @@
     <div v-if="isShowDialog"  class="setting-dialog" >
         <ul class="setting-list" :class="store.darkMode ? 'dark-mode' : ''">
             <li style="display: flex; align-items: center; gap:28px">
-                <span>Dark mode: </span>
+                <!-- 다크모드 설정 버튼 -->
+                <!-- <span>Dark mode: </span>
                 <span v-show="store.darkMode" class="dark-mode-btn on" @click="setDarkMode">
                     <img :src="darkmodeRoutine" alt="">
                     On
@@ -11,8 +12,9 @@
                 <span v-show="!store.darkMode" class="dark-mode-btn off"  @click="setDarkMode">
                     <img :src="darkmodeRoutine" alt="">
                     Off
-                </span>
+                </span> -->
 
+                <span>블록 순서 설정: </span>
             </li>
             <li v-for="(item, index) in blockItemIds" class="setting-list-item" >
                 <span>{{ item.name }}</span>

@@ -18,7 +18,7 @@
             <template v-if="DashBoardObj" v-for="item in blockItemIds">
                 <SceneInfo
                 v-if="item.id==='sceneInfo'"
-                    label="구미 천연가스발전소 현장"
+                    label="신림봉천 터널"
                     :data="DashBoardObj"
                     :button="false"
                 />
@@ -49,7 +49,6 @@
                 <ViewMap
                 v-if="item.id==='viewMap'"
                     :data="DashBoardObj.Scene_data"
-                    :area-data="DashBoardObj.AreaCount"
                 />
                 
                  <!-- 
@@ -132,10 +131,10 @@ import api from "../selfApi"
 import dayjs from "dayjs"
 import "dayjs/locale/ko" //한국어
 
-import HeatwavePopup from "../popups/HeatwavePopup.vue"
-import AlarmPopup from "../popups/AlarmPopup.vue"
-import FcmPopup from "../popups/FcmPopup.vue"
-import SettingDialog from "../popups/settingPopup.vue"
+import HeatwavePopup from "./popups/HeatwavePopup.vue"
+import AlarmPopup from "./popups/AlarmPopup.vue"
+import FcmPopup from "./popups/FcmPopup.vue"
+import SettingDialog from "./popups/settingPopup.vue"
 import settingBtn from "@assets/images/settingBtn.svg"
 
 // blocks items
@@ -170,8 +169,8 @@ const blockItemIds:any = ref([
     {id:"notification", name:"공지사항", width: "19%", height: "32%"},
     {id:"departureStatus", name:"출역 현황", width: "19%", height: "32%"},
     {id:"heavyEquipStatus", name:"중장비 출입", width: "19%", height: "32%"},
-    {id:"noRecordCars", name:"스마트TBM", width: "19%", height: "32%"},
-    {id:"viewMap", name:"도면", width: "100%", height: "66%"},
+    {id:"noRecordCars", name:"미등록차량", width: "19%", height: "32%"},
+    {id:"viewMap", name:"터널도면", width: "100%", height: "66%"},
     
 
     // // left part

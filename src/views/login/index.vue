@@ -26,8 +26,13 @@ import { useRouter } from 'vue-router'
 import LoginForm from './loginForm/index.vue'
 import { toast } from 'vue3-toastify'
 import loginsound from "@assets/audio/loginsound.mp3"
+import { useStore } from "@stores/index"
+
+const store = useStore()
+
 
 onMounted(() => {
+    store.setMenuOpen(false)
     const router = useRouter()
     if (router.currentRoute.value.query.showAlert === 'true') {
         toast.warn('다른기기에서 로그인했습니다. 로그아웃 됩니다.')
@@ -37,6 +42,7 @@ onMounted(() => {
     // 소리
     const audio = new Audio(loginsound);
     audio.play()
+
 })
 </script>
 

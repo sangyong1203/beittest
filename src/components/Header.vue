@@ -7,6 +7,9 @@
                 <div class="menu-btn-line"></div>
             </div>
             <img :src="logo" alt="" class="logo" />
+            <div class="header__title" >
+                신림봉천 터널 내 위치파악 시스템
+            </div>
         </div>
         <div class="header__profile-box">
             <div class="header__profile-box__profile">
@@ -94,6 +97,16 @@ const logout = () => {
         }
         
     }
+    &__title{
+        height: 100%;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        padding: 0 20px;
+        
+    }
     &__profile-box {
         display: flex;
         align-items: center;
@@ -130,12 +143,11 @@ const logout = () => {
 
 }
 .logo{
-    height: 30px;
-    margin-left: 30px;
-    margin-top: -5px;
+    height: 35px;
+    margin-left: 25px;
 }
 .menu-btn{
-    width: 35px;
+    width: 30px;
     height: 35px;
     display: flex;
     justify-content: space-evenly;

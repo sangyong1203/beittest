@@ -6,35 +6,20 @@
             <span class="double-datePicker__label-box__required-mark" :class="{ active: required }">*</span>
         </div>
         <!-- 시작일 -->
-        <form class="double-datePicker__form" :class="{ disabled: disabled }">
-            <input
-                v-model="setStartDate"
-                type="text"
-                placeholder="날짜 선택"
-                class="double-datePicker__form__input"
-                :disabled="disabled"
-                :style="{ width: inputWidth ? `${inputWidth}` : `230px`, fontSize: fontSize ? `${fontSize}` : `16px` }"
-            />
-            <IconButton :icon="'calendarBlack'" class="double-datePicker__form__button" @click="openFrontCalendar" :class="{ disabled: disabled }" />
+        <el-date-picker
 
-            <!-- <v-date-picker v-if="!disabled" v-model="initStartDate" mode="date" class="double-datePicker__form__calendar" :class="{ active: showFrontCalendar }" /> -->
-        </form>
-
+            v-model="formatedStartDate"
+            type="date"
+            placeholder="날짜 선택"
+            :disabled="disabled"
+        />
         <div class="double-datePicker__hyphen"></div>
-
-        <form class="double-datePicker__form" :class="{ disabled: disabled }">
-            <input
-                v-model="setEndDate"
-                type="text"
-                placeholder="날짜 선택"
-                class="double-datePicker__form__input"
-                :disabled="disabled"
-                :style="{ width: inputWidth ? `${inputWidth}` : `230px`, fontSize: fontSize ? `${fontSize}` : `16px` }"
-            />
-            <IconButton :icon="'calendarBlack'" class="double-datePicker__form__button" @click="openBackCalendar" :class="{ disabled: disabled }" />
-
-            <!-- <v-date-picker v-if="!disabled" v-model="initEndDate" mode="date" class="double-datePicker__form__calendar" :class="{ active: showBackCalendar }" /> -->
-        </form>
+        <el-date-picker
+            v-model="formatedEndDate"
+            type="date"
+            placeholder="날짜 선택"
+            :disabled="disabled"
+        />
     </div>
 </template>
 
@@ -43,129 +28,50 @@ import IconButton from "@components/common/button/IconButton.vue"
 import { ref, computed, toRefs, watch } from "vue"
 import dayjs from "dayjs"
 
-const emit = defineEmits(["send-startDate", "send-endDate"])
+// const emit = defineEmits(["send-startDate", "send-endDate"])
 
 interface Props {
     label?: string
     labelWidth?: string
-    inputWidth?: string
-    fontSize?: string
     required?: boolean
     startDate: string
     endDate: string
     disabled?: boolean
-    isUpdate?: boolean
-    setInfo?: {
-        startDate: string
-        endDate: string
-    }
 }
 const props = defineProps<Props>()
-const { startDate, endDate, disabled, isUpdate, label, labelWidth, inputWidth, fontSize, setInfo } = toRefs(props)
+const { startDate, endDate, disabled, label, labelWidth } = toRefs(props)
 
 // 시작일 (임의로 -60 일 지정 '* 추후 데이터 있을 때는 예외처리 필요')
-const diffDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-const initStartDate = ref<Date>(diffDate)
-const initEndDate = ref<Date>(new Date())
+    
 
-let setStartDate = computed(() => {
-    if (isUpdate.value != true) {
-        if (startDate.value != null) {
-            return startDate.value
-        } else {
-            const res = dayjs(initStartDate.value).format("YYYY.MM.DD")
-            showFrontCalendar.value = false
+const emit = defineEmits(["update:startDate", "update:endDate"])
 
-            if (res == "Invalid Date") {
-                emit("send-startDate", "")
-                return initStartDate.value
-            } else {
-                emit("send-startDate", res)
-                return res
-            }
-        }
-    } else {
-        const res = dayjs(initStartDate.value).format("YYYY.MM.DD")
-
-        if (startDate.value != null) {
-            return startDate.value
-        } else {
-            emit("send-startDate", res)
-            return res
-        }
-    }
+const formatedStartDate = computed({
+    get() {
+        const initdate = dayjs(new Date()).subtract(3, "month").format("YYYY-MM-DD")
+        let res = startDate.value ? startDate.value : initdate
+        emit("update:startDate", res)
+        return res
+    },
+    set(value) {
+        const res = dayjs(value).format("YYYY-MM-DD")
+        emit("update:startDate", res)
+    },
 })
 
-watch(initStartDate, (vo) => {
-    if (vo) {
-        const res = dayjs(initStartDate.value).format("YYYY.MM.DD")
-        showFrontCalendar.value = false
-
-        if (res == "Invalid Date") {
-            emit("send-startDate", "")
-            return startDate.value
-        } else {
-            emit("send-startDate", res)
-            return res
-        }
-    }
+const formatedEndDate = computed({
+    get() {
+        const initdate = dayjs(new Date()).format("YYYY-MM-DD")
+        let res = endDate.value ? endDate.value : initdate
+        emit("update:endDate", res)
+        return res
+    },
+    set(value) {
+        const res = dayjs(value).format("YYYY-MM-DD")
+        emit("update:endDate", res)
+    },
 })
 
-let setEndDate = computed(() => {
-    if (isUpdate.value != true) {
-        if (endDate.value != null) {
-            return endDate.value
-        } else {
-            const res = dayjs(initEndDate.value).format("YYYY.MM.DD")
-            showBackCalendar.value = false
-
-            if (res == "Invalid Date") {
-                emit("send-endDate", "")
-                return initEndDate.value
-            } else {
-                emit("send-endDate", res)
-                return res
-            }
-        }
-    } else {
-        const res = dayjs(initEndDate.value).format("YYYY.MM.DD")
-
-        if (endDate.value != null) {
-            return endDate.value
-        } else {
-            emit("send-endDate", res)
-            return res
-        }
-    }
-})
-
-watch(initEndDate, (vo) => {
-    if (vo) {
-        const res = dayjs(initEndDate.value).format("YYYY.MM.DD")
-        showBackCalendar.value = false
-
-        if (res == "Invalid Date") {
-            emit("send-endDate", "")
-            return endDate.value
-        } else {
-            emit("send-endDate", res)
-            return res
-        }
-    }
-})
-
-// Calendar 열기 & 닫기
-const showFrontCalendar = ref<boolean>(false)
-const showBackCalendar = ref<boolean>(false)
-
-const openFrontCalendar = () => {
-    showFrontCalendar.value = !showFrontCalendar.value
-    showBackCalendar.value = false
-}
-const openBackCalendar = () => {
-    showFrontCalendar.value = false
-    showBackCalendar.value = !showBackCalendar.value
-}
 </script>
 
 <style lang="scss" scoped>
@@ -264,5 +170,11 @@ const openBackCalendar = () => {
         cursor: not-allowed !important;
         background: #fafafa !important;
     }
+}
+:deep(.el-date-editor){
+    flex: 1;
+    --el-input-height: 48px;
+    font-size: 16px;
+    font-weight: 500;
 }
 </style>

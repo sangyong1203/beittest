@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import FormDialog from '@components/common/layout/FormDialogLayout.vue'
-import FormProfile from '@components/common/form/Image.vue'
+import FormProfile from '@components/common/form/file/Profile.vue'
 import FormPassword from '@components/common/form/PasswordField.vue'
 import FormDateField from '@components/common/form/input/DateField.vue'
 import FormLabelField from '@components/common/form/input/LabelField.vue'

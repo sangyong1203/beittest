@@ -96,8 +96,8 @@ export const useStore = defineStore("main", {
         async initDarkMode() {
             this.darkMode = true
         },
-        async setMenuOpen() {
-            this.isMenuOpen = !this.isMenuOpen
+        async setMenuOpen(value:boolean) {
+            this.isMenuOpen = value
         },
         async setIsLogin( data:any) {
             this.isLogin = data

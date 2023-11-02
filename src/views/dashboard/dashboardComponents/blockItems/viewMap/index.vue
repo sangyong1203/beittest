@@ -188,7 +188,7 @@ $bordercolor: #2d3438;
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid $bordercolor;
-        background: #141e29;
+        background: #293643;
 
     }
     .workers-content{
@@ -237,7 +237,7 @@ $bordercolor: #2d3438;
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid $bordercolor;
-        background: #141e29;
+        background: #293643;
     }
     .equips-content{
         display: flex;

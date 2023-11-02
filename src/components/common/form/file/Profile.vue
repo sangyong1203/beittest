@@ -5,43 +5,12 @@
             <span class="image__label__required" :class="{ active: required }">*</span>
         </div>
         <form class="image__imageArea">
-            <img src="@assets/images/logo.svg" class="image__imageArea__profile" />
             <span class="image__imageArea__inform">
                 사진은 안면인식기에서 사진 촬영 후 <br />
                 자동으로 불러옵니다.
             </span>
         </form>
     </div>
-    <!-- 
-    <div v-if="userImage.length === 0" class="image">      
-        <div class="image__label" :style="{ width: labelWidth ? `${labelWidth}` : `120px` }">
-            {{ label }}
-            <span class="image__label__required" :class="{ active: required }">*</span>
-        </div>
-        <form v-if="preview" class="image__imageArea">
-            <img :src="base64" alt="" class="image__imageArea" @click="changeInit" />
-        </form>
-        <form v-else class="image__imageArea">
-            <label for="file" class="image__imageArea__button">
-                <span class="arrow-column"></span>
-                <span class="arrow-row"></span>
-            </label>
-            <input type="file" name="file" id="file" accept="image/*" @change="insertImage" />
-        </form>
-    </div>
-    <div v-else class="image">
-        <div class="image__label" :style="{ width: labelWidth ? `${labelWidth}` : `120px` }">
-            {{ label }}
-            <span class="image__label__required" :class="{ active: required }">*</span>
-        </div>
-        <form v-if="preview" class="image__imageArea">
-            <img :src="userImage" alt="" class="image__imageArea" @click="changeInit" />
-        </form>
-        <form v-else class="image__imageArea">
-            <img :src="userImage" alt="" @change="insertImage" @click="changeInit" class="image__imageArea__profile" />
-        </form>     
-    </div>
-    -->
 </template>
 
 <script setup lang="ts">
