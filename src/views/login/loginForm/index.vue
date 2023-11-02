@@ -2,7 +2,7 @@
     <div class="form">
         <div class="form__title">
             <img src="@assets/images/logo_doosan.png" alt="" class="form__title__image" />
-            <span class="form__title__text">안전에 스마트를 더하다</span>
+            <!-- <span class="form__title__text">안전에 스마트를 더하다</span> -->
         </div>
         <div class="form__input-box">
             <FormID v-model="ID_InputValue" :label="'아이디'" :inputWidth="'400px'" :validation="false" @keydown.enter="login" />

@@ -49,7 +49,7 @@
                 />
             </div>
         </div>
-        <FormFileTab
+        <!-- <FormFileTab
             :userEduData="userEduData"
             :userHealthData="userHealthData"
             :userEduFiles="userEduFiles"
@@ -60,7 +60,7 @@
             @send-healthFile="getHealthFile"
             @delete-eduFile="deleteEduFile"
             @delete-healthFile="deleteHealthFile"
-        />
+        /> -->
     </FormDialog>
 </template>
 
@@ -74,12 +74,12 @@ import FormAutoCompleteField from "@components/common/form/input/AutoCompleteFie
 import FormFileTab from "@components/common/form/FileTab.vue"
 import FormLabelRegEquipField from "@components/common/form/LabelRegEquipField.vue"
 import HealthSelectBox from './HealthSelectBox.vue'
+import api from "../selfApi"
 
 import { ref, computed } from "vue"
 import { useStore } from "@stores/index"
 import { toast } from "vue3-toastify"
 
-import api from "@apis/selfApi"
 
 const isDisabled = ref<boolean>(true)
 

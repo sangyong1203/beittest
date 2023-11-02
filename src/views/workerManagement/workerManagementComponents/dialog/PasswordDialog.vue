@@ -56,11 +56,11 @@
 <script setup lang="ts">
 import BasicButton from '@components/common/button/BasicButton.vue'
 import PasswordField from '@components/common/form/PasswordField.vue'
+import api from '../selfApi'
 
 import { ref, toRefs } from 'vue'
 import { useStore } from '@stores/index'
 import { toast } from 'vue3-toastify'
-import api from '@apis/selfApi'
 
 interface Props {
     userName: string

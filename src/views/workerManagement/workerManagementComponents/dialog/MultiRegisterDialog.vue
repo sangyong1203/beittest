@@ -59,10 +59,10 @@
 import FormDialog from "@components/common/layout/FormDialogLayout.vue"
 import FormDropdown from "@components/common/form/dropdown/Dropdown.vue"
 import BasicButton from "@components/common/button/BasicButton.vue"
+import api from "../selfApi"
 
 import { ref } from "vue"
 import { useStore } from "@stores/index"
-import api from "../../selfApi"
 import { toast } from "vue3-toastify"
 
 interface WorkerList {

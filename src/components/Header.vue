@@ -59,19 +59,15 @@ const logout = () => {
 
 .header {
     position: relative;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     width: 100%;
     height: 70px;
-
     padding: 0 42px;
-
     background-color: $color-white-000;
-
     z-index: 2;
+    box-shadow: 0px 0px 4px #3b3b3b78;
 
     &__main {
         display: flex;

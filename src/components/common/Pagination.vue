@@ -1,26 +1,24 @@
 <template>
-    <div class="footer">
-        <div class="pagination">
-            <select class="pagination__select-box" @change="changeOption">
-                <option v-for="item in options" :key="item" :value="item">{{ item }}</option>
-            </select>
-            <div class="pagination__number-box">
-                <button class="pagination__number-box__button" @click="moveToPage(1)">
-                    <img :src="doubleLeftArrow" alt="" />
-                </button>
-                <button class="pagination__number-box__button" @click="moveToPrev">
-                    <img :src="singleLeftArrow" alt="" />
-                </button>
-                <button v-for="index in pages[step]" :key="index" @click="moveToPage(index)" class="pagination__number-box__button" :class="{ active: index === page }">
-                    {{ index }}
-                </button>
-                <button class="pagination__number-box__button" @click="moveToNext">
-                    <img :src="singleRightArrow" alt="" />
-                </button>
-                <button class="pagination__number-box__button" @click="moveToPage(totalPage)">
-                    <img :src="doubleRightArrow" alt="" />
-                </button>
-            </div>
+    <div class="pagination">
+        <select class="pagination__select-box" @change="changeOption">
+            <option v-for="item in options" :key="item" :value="item">{{ item }}</option>
+        </select>
+        <div class="pagination__number-box">
+            <button class="pagination__number-box__button" @click="moveToPage(1)">
+                <img :src="doubleLeftArrow" alt="" />
+            </button>
+            <button class="pagination__number-box__button" @click="moveToPrev">
+                <img :src="singleLeftArrow" alt="" />
+            </button>
+            <button v-for="index in pages[step]" :key="index" @click="moveToPage(index)" class="pagination__number-box__button" :class="{ active: index === page }">
+                {{ index }}
+            </button>
+            <button class="pagination__number-box__button" @click="moveToNext">
+                <img :src="singleRightArrow" alt="" />
+            </button>
+            <button class="pagination__number-box__button" @click="moveToPage(totalPage)">
+                <img :src="doubleRightArrow" alt="" />
+            </button>
         </div>
     </div>
 </template>
@@ -100,62 +98,53 @@ const moveToNext = (): void => {
 <style lang="scss" scoped>
 @import '@assets/styles/main.scss';
 
-.footer {
+.pagination {
     display: flex;
     align-items: center;
     justify-content: center;
 
     width: 100%;
-    height: 50px;
+    height: 60px;
 
-    .pagination {
+    &__select-box {
+        padding: 8px 16px;
+        margin-right: 36px;
+
+        background: $color-white-000;
+        border: 1px solid $color-white-400;
+        border-radius: 3px;
+
+        // How to Change Select-Box-Arrow Shape & Position
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        background-position: calc(100% - 12px) center !important;
+        background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
+            no-repeat;
+        padding: 8px 32px 8px 16px;
+    }
+    &__number-box {
         display: flex;
         align-items: center;
-        justify-content: center;
 
-        width: 100%;
-        height: 100%;
+        &__button {
+            outline: none;
+            border: none;
+            background: transparent;
 
-        &__select-box {
-            padding: 8px 16px;
-            margin-right: 36px;
+            width: 40px;
+            height: 40px;
 
-            background: $color-white-000;
-            border: 1px solid $color-white-400;
             border-radius: 3px;
+            background-color: $color-white-000;
+            cursor: pointer;
 
-            // How to Change Select-Box-Arrow Shape & Position
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            -ms-appearance: none;
-            background-position: calc(100% - 12px) center !important;
-            background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
-                no-repeat;
-            padding: 8px 32px 8px 16px;
-        }
-        &__number-box {
-            display: flex;
-            align-items: center;
-
-            &__button {
-                outline: none;
-                border: none;
-                background: transparent;
-
-                width: 40px;
-                height: 40px;
-
-                border-radius: 3px;
-                background-color: $color-white-000;
-                cursor: pointer;
-
-                &.active {
-                    background: $color-white-100;
-                }
-                &:hover {
-                    background: $color-white-100;
-                }
+            &.active {
+                background: $color-white-100;
+            }
+            &:hover {
+                background: $color-white-100;
             }
         }
     }

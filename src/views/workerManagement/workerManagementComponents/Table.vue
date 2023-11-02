@@ -108,6 +108,7 @@ const openDetailDialog = (id: number): void => {
 
     width: 100%;
     height: calc(100% - 80px);
+    // flex: 1;
 
     &__label-box {
         display: flex;
@@ -163,13 +164,25 @@ const openDetailDialog = (id: number): void => {
 
         overflow-y: scroll;
 
-        // /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        // // /* Hide scrollbar for IE, Edge and Firefox */
+        // -ms-overflow-style: none; /* IE and Edge */
+        // scrollbar-width: none; /* Firefox */
 
-        // /* Hide scrollbar for Chrome, Safari and Opera */
+        // // /* Hide scrollbar for Chrome, Safari and Opera */
+        // &::-webkit-scrollbar {
+        //     display: none;
+        // }
         &::-webkit-scrollbar {
-            display: none;
+            width: 6px;
+            height: 6px;
+            background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 6px;
+            background-color: transparent;
+        }
+        &:hover::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.262);
         }
 
         &__list-box {

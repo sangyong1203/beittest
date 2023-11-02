@@ -177,13 +177,19 @@ onMounted(() => {
             flex: 1;
             overflow-y: scroll;
 
-            // /* Hide scrollbar for IE, Edge and Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
+            padding: 0 5px;
 
-            // /* Hide scrollbar for Chrome, Safari and Opera */
             &::-webkit-scrollbar {
-                display: none;
+                width: 6px;
+                height: 6px;
+                background-color: transparent;
+            }
+            &::-webkit-scrollbar-thumb {
+                border-radius: 6px;
+                background-color: transparent;
+            }
+            &:hover::-webkit-scrollbar-thumb {
+                background-color: rgba(0, 0, 0, 0.262);
             }
         }
 

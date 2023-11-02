@@ -76,19 +76,19 @@
 
 <script setup lang="ts">
 import FormDialog from '@components/common/layout/FormDialogLayout.vue'
-import FormProfile from '@components/common/form/file/Profile.vue'
+import FormProfile from '@components/common/form/Image.vue'
 import FormPassword from '@components/common/form/PasswordField.vue'
 import FormDateField from '@components/common/form/input/DateField.vue'
 import FormLabelField from '@components/common/form/input/LabelField.vue'
 import FormAutoCompleteField from '@components/common/form/input/AutoCompleteField.vue'
 import FormLabelRegEquipField from '@components/common/form/LabelRegEquipField.vue'
 import HealthSelectBox from './HealthSelectBox.vue'
+import api from '../selfApi'
 
 import { ref } from 'vue'
 import { useStore } from '@stores/index'
 import { toast } from 'vue3-toastify'
 
-import api from '@apis/selfApi'
 
 // Store에서 카테고리 불러오기
 const store = useStore()

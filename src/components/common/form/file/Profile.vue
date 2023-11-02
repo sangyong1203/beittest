@@ -5,7 +5,7 @@
             <span class="image__label__required" :class="{ active: required }">*</span>
         </div>
         <form class="image__imageArea">
-            <img src="/assets/images/logo.svg" class="image__imageArea__profile" />
+            <img src="@assets/images/logo.svg" class="image__imageArea__profile" />
             <span class="image__imageArea__inform">
                 사진은 안면인식기에서 사진 촬영 후 <br />
                 자동으로 불러옵니다.

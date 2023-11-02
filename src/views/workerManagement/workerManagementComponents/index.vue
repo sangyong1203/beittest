@@ -27,7 +27,7 @@ import CommonPagination from "@components/common/Pagination.vue"
 import { ref, watch } from "vue"
 import { useStore } from "@stores/index"
 import { toast } from "vue3-toastify"
-import api from "../selfApi"
+import api from "./selfApi"
 import dayjs from "dayjs"
 
 let contentParams = {
@@ -154,4 +154,3 @@ $FOOTER: 60px; // 공통 푸터 Height 값
     }
 }
 </style>
-./selfApi

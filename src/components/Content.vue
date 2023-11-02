@@ -65,7 +65,7 @@ const setEndDate = (value: string) => {
         align-items: center;
         justify-content: space-between;
 
-        padding-left: 32px;
+        padding-left: 25px;
 
         &__label {
             font-weight: 600;
@@ -92,11 +92,13 @@ const setEndDate = (value: string) => {
     }
     &__body {
         width: 100%;
-        height: calc(100% - 140px);
+        height: calc(100% - 130px);
         padding: 30px 40px 0 40px;
         background-color: $color-white-000;
         border-radius: 6px;
         box-shadow: (0px 0px 3px rgba(0, 0, 0, 0.149));
+        display: flex;
+        flex-direction: column;
     }
 }
 .divider {
@@ -107,5 +109,8 @@ const setEndDate = (value: string) => {
 }
 :deep(.double-datePicker__label-box){
     display: none;
+}
+:deep(.table){
+    height: calc(100% - 60px) !important;
 }
 </style>

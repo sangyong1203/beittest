@@ -43,6 +43,9 @@ input:focus {
     img{
         margin-left: 8px;
     }
+    span{
+        color: inherit;
+    }
 }
 .button-white{
     color: #294e92;
@@ -68,7 +71,7 @@ input:focus {
     --el-menu-hover-bg-color: #888d926b !important; // menu에 mouse hover 시 색상
 }
 .el-drawer{
-    --el-drawer-bg-color:var(--el-menu-bg-color) !important;
+    // --el-drawer-bg-color:var(--el-menu-bg-color) !important;
     --el-drawer-padding-primary:0 !important;
   }
 .el-drawer .el-drawer__body{

@@ -3,7 +3,7 @@ import * as icons from "./icons.js"
 export const menuList = [
     {
         nameZh: "모니터링",
-        name: "monitering",
+        name: "dashboard",
         path: "/dashboard",
         iconCls: icons.MORNITERING,
         isActive: false,
@@ -54,29 +54,7 @@ export const menuList = [
             },
         ],
     },
-    {
-        nameZh: "안전교육/회의",
-        name: "education",
-        path: "/education",
-        iconCls: icons.EDUCATION,
-        isActive: false,
-        menuVOList: [
-            {
-                nameZh: "안전교육",
-                name: "saftyEducation",
-                path: "/education/saftyEducation",
-                iconCls: "",
-                isActive: false,
-            },
-            {
-                nameZh: "안전회의록",
-                name: "recordList",
-                path: "/education/recordList",
-                iconCls: "",
-                isActive: false,
-            },
-        ],
-    },
+    
     {
         nameZh: "인력관리",
         name: "humanResource",
@@ -87,14 +65,14 @@ export const menuList = [
             {
                 nameZh: "근로자정보",
                 name: "workerManagement",
-                path: "/humanResource/workerManagement",
+                path: "/workerManagement",
                 iconCls: "",
                 isActive: false,
             },
             {
                 nameZh: "관리자정보",
                 name: "adminManagement",
-                path: "/humanResource/adminManagement",
+                path: "/adminManagement",
                 iconCls: "",
                 isActive: false,
             },
