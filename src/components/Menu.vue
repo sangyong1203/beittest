@@ -2,7 +2,7 @@
   <el-drawer 
       v-model="store.isMenuOpen" 
       direction="ltr" 
-      size="240"
+      size="220"
       :show-close="false"
       :with-header="false"
       @closed="handleClose"
@@ -46,7 +46,7 @@
   import { useStore } from "@stores/index"
   import {onMounted, ref, watch} from "vue";
   import { useRoute } from "vue-router"
-  import logo from "@assets/images/gsilLogo.svg"
+  import logo from "@assets/images/logo_doosan.png"
 
   
   interface props {
@@ -136,9 +136,10 @@
   justify-content: center;
   display: flex;
   transition: all 0.3s ease-in-out;
-  padding: 20px 0 10px;
+  padding: 30px 0 20px;
+  border-bottom: 6px solid #164399;
   img{
-    width: 80px;
+    width: 90px;
   }
 } 
 
