@@ -1,4 +1,4 @@
-import fetch from "@/apis/fetch"
+import fetch from "@apis/fetch"
 
 export default {
     

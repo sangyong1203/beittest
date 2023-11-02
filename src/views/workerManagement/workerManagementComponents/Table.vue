@@ -1,10 +1,10 @@
 <template>
-    <!-- 안전교육 -->
     <div class="table">
         <div class="table__label-box">
             <span class="table__label-box__label">{{ label }} 목록</span>
             <div class="table__label-box__button-box">
-                <BasicButton :label="'등록'" :theme="'fill'" @click="openDialog" />
+                <BasicButton :label="'등록'" :theme="'outer'" @click="openDialog" />
+                <BasicButton :label="'일괄 등록'" :theme="'fill'" @click="openMultiDialog" />
             </div>
         </div>
         <!-- 리스트 메뉴 -->
@@ -16,11 +16,7 @@
         </div>
         <!-- 리스트 -->
         <div class="table__body">
-            <div v-if="!data" class="table__body__noData">
-                <img src="@assets/images/logo.svg" alt="" class="logo" />
-                <span class="inform">등록된 {{ label }} 목록이 없습니다.</span>
-            </div>
-            <div v-for="(item, index) in data" :key="index" class="table__body__list-box" @click="openDetailDialog(item)">
+            <div v-for="(item, index) in data" :key="index" class="table__body__list-box" @click="openDetailDialog(item.user_id)">
                 <div class="list" :style="{ width: `8%` }">
                     {{ index + 1 + filteredIndex }}
                 </div>
@@ -31,16 +27,16 @@
                     {{ item.ctgo_construction_name }}
                 </div>
                 <div class="list" :style="{ width: `${width}%` }">
-                    {{ item.education_class_name }}
+                    {{ item.ctgo_occupation_name }}
                 </div>
                 <div class="list" :style="{ width: `${width}%` }">
-                    {{ item.lecturer_name }}
+                    {{ item.user_name }}
                 </div>
                 <div class="list" :style="{ width: `${width}%` }">
-                    {{ item.education_date.slice(0, 10) }}
+                    {{ item.user_phone ? item.user_phone : "-" }}
                 </div>
                 <div class="list" :style="{ width: `${width}%` }">
-                    {{ item.education_start_time + " ~ " + item.education_end_time }}
+                    {{ item.reg_date }}
                 </div>
             </div>
         </div>
@@ -85,13 +81,19 @@ const filteredIndex = computed(() => {
 })
 
 // 부모컴포넌트로 다이얼로그 Open을 위한 이벤트 전달
-const emit = defineEmits(["open-dialog", "open-detail"])
+const emit = defineEmits(["open-dialog", "open-multi", "open-detail"])
 const openDialog = (): void => {
     emit("open-dialog", true)
 }
-
-const openDetailDialog = (data: any): void => {
-    emit("open-detail", data)
+const openMultiDialog = (): void => {
+    emit("open-multi", true)
+}
+const openDetailDialog = (id: number): void => {
+    const value = {
+        id: id,
+        isVisible: true,
+    }
+    emit("open-detail", value)
 }
 </script>
 
@@ -138,6 +140,7 @@ const openDetailDialog = (data: any): void => {
 
         width: 100%;
         height: 48px;
+        min-height: 48px;
 
         background-color: $color-white-100;
         border-top: 1px solid $color-white-200;
@@ -185,25 +188,6 @@ const openDetailDialog = (data: any): void => {
                 justify-content: center;
 
                 cursor: pointer;
-            }
-        }
-        &__noData {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            width: 100%;
-            height: 100%;
-
-            .logo {
-                width: 25%;
-                opacity: 0.6;
-            }
-            .inform {
-                font-size: 20px;
-                font-weight: 700;
-                color: $color-white-400;
             }
         }
     }
