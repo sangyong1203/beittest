@@ -119,6 +119,8 @@
         class="alarmPopup-dialog" 
         ref="alarmPopupRef"
     />
+    <VictimAlarmPopup class="victimAlarm-dialog" ref="victimAlarmRef"/>
+
 </template>
 
 <script setup lang="ts">
@@ -134,6 +136,8 @@ import "dayjs/locale/ko" //한국어
 import HeatwavePopup from "./popups/HeatwavePopup.vue"
 import AlarmPopup from "./popups/AlarmPopup.vue"
 import FcmPopup from "./popups/FcmPopup.vue"
+import VictimAlarmPopup from "./popups/VictimAlarmPopup.vue"
+
 import SettingDialog from "./popups/settingPopup.vue"
 import settingBtn from "@assets/images/settingBtn.svg"
 
@@ -316,25 +320,50 @@ function fetchApi() {
     })
 }
 
+
+function getPushEvent(){
+    let params = {
+        scene_ids: JSON.stringify([1]),
+    }
+    params = Object.assign({}, params, headerParams)
+    api.getPushEvent(params)
+        .then((res) => {
+            if(res && res.data?.rsCode === 0){
+                let pushMessage = res.data.rsMap
+                // this.fcmAlert(pushMessage)
+                console.log("push mesg",pushMessage )
+                // 비상알림
+                getPushData(pushMessage)
+            }
+        }
+    )
+}
+
 const heatwavePopupRef: any = ref(null)
 
-function getFeelsLike(weather: any) {
+function getFeelsLike(weather:any){
     let degreeState = ""
-    if (weather.feels_like && weather.feels_like >= 38) {
+    if(weather.feels_like && weather.feels_like >= 38){
         degreeState = "폭염위험"
-    } else if (weather.feels_like && weather.feels_like >= 35) {
+    } 
+    else if(weather.feels_like && weather.feels_like >= 35){
         degreeState = "폭염경보"
-    } else if (weather.feels_like && weather.feels_like >= 33) {
+    }
+    else if(weather.feels_like && weather.feels_like >= 33){
         degreeState = "폭염주의보"
     }
-    if (degreeState) openHeatwave(degreeState)
+    if(degreeState) openHeatwave(degreeState)
+    
 }
-function openHeatwave(degreeState: string) {
+function openHeatwave(degreeState:string){
+    store.setHeatwaveAlarmTimeoutState(true)
     heatwavePopupRef.value.openDialog(degreeState)
 }
 
+
 const fcmPopupRef: any = ref(null)
 const alarmPopupRef: any = ref(null)
+const victimAlarmRef: any = ref(null)
 
 function getPushData(data: any) {
     let mockdata = [
@@ -364,7 +393,10 @@ function getPushData(data: any) {
         pushData.forEach( (item:any)=>{
             if( item.push_title === "비상 알림" ||  item.push_title === "경고 알림"){
                 alarmPopupRef.value.openDialog(item)
-            } else if(item.push_title === "폭염주의보" ||  item.push_title === "폭염경보"){
+            } else if (item.push_title === "보건 알림") {
+                // 보건알림
+                alarmPopupRef.value.openDialog(item)
+            }else if(item.push_title === "폭염주의보" ||  item.push_title === "폭염경보"){
 
                 if(!store.heatwaveAlarmTimeoutState){
                     openHeatwave(item.push_title)
@@ -372,7 +404,11 @@ function getPushData(data: any) {
                         store.setHeatwaveAlarmTimeoutState(false)
                     }, 1000*60*60*1);
                 }
+            } else if (item.push_title === "SOS 알림") {
+                // 재해자 제보 sos알림
+                victimAlarmRef.value.openDialog(item)
             } else {
+                // sos 구조알림
                 fcmPopupRef.value.openDialog(item)
             }
         })
@@ -399,7 +435,8 @@ const timer: any = []
 onMounted(() => {
 
     fetchApi()
-
+    getPushEvent()
+    timer.push(setInterval(getPushEvent, 10000))
     timer.push(setInterval(fetchApi, 10000))
 
     store.setCompanyList() // 업체 dropdown 세팅

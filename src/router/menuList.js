@@ -24,20 +24,13 @@ export const menuList = [
         iconCls: icons.NOTICE,
         isActive: false,
         menuVOList: [
-            // {
-            //     nameZh: "공지사항",
-            //     name: "noticeList",
-            //     path: "/notice/noticeList",
-            //     iconCls: "",
-            //     isActive: false,
-            // },
-            // {
-            //     nameZh: "알림수신함",
-            //     name: "alarmInbox",
-            //     path: "/notice/alarmInbox",
-            //     iconCls: "",
-            //     isActive: false,
-            // },
+            {
+                nameZh: "알림이력",
+                name: "alarm",
+                path: "/notice/alarm",
+                iconCls: "",
+                isActive: false,
+            },
             {
                 nameZh: "SOS요청이력",
                 name: "sos",

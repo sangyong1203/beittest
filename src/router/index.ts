@@ -36,6 +36,12 @@ const routes: Array<RouteRecordRaw> = [
         name: "workStop", 
         component: () => import("@views/workStop/index.vue"),
     },
+    // 알림공지
+    {
+        path: "/alarm",
+        name: "alarm", 
+        component: () => import("@views/alarm/index.vue"),
+    },
 ]
 const router = createRouter({
     history: createWebHashHistory(),

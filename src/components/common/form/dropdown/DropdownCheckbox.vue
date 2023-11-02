@@ -286,8 +286,8 @@ watch(modelValue, () => {
             border: 1px solid $color-red-000;
         }
         &__input {
-            padding: 14px 12px;
-
+            padding: 12px;
+            flex-grow: 1;
             outline: none;
             border: none;
             border-radius: 6px;
@@ -315,8 +315,6 @@ watch(modelValue, () => {
 
             width: 40px;
             height: 40px;
-
-            margin-right: 4px;
 
             border-radius: 3px;
             background-color: $color-white-050;
@@ -388,6 +386,7 @@ watch(modelValue, () => {
     background-color: $color-white-050;
     color: #294e92;
     border-radius: 3px;
+    width: 67px;
     .check-all-box{
         margin-right: 4px;
         height: 16px;
