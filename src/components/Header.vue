@@ -152,7 +152,8 @@ const logout = () => {
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
-
+    cursor: pointer;
+    
     .menu-btn-line{
         height: 3px;
         background: #a4a4a4;

@@ -137,7 +137,7 @@
   display: flex;
   transition: all 0.3s ease-in-out;
   padding: 30px 0 20px;
-  border-bottom: 6px solid #164399;
+  border-bottom: 4px solid #164399;
   img{
     width: 90px;
   }

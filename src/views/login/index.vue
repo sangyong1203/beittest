@@ -32,16 +32,17 @@ const store = useStore()
 
 
 onMounted(() => {
-    store.setMenuOpen(false)
     const router = useRouter()
     if (router.currentRoute.value.query.showAlert === 'true') {
         toast.warn('다른기기에서 로그인했습니다. 로그아웃 됩니다.')
         const { showAlert, ...query } = router.currentRoute.value.query
         router.replace({ query })
     }
+    
     // 소리
     const audio = new Audio(loginsound);
     audio.play()
+    store.setMenuOpen(false)
 
 })
 </script>

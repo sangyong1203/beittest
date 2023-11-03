@@ -182,16 +182,12 @@ const confirmOK = () => {
     align-items: center;
     justify-content: center;
 
-    padding: 100px;
+    padding: 80px;
 
     border-radius: 28px;
     background-color: $color-white-000;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
 
-    @include laptop() {
-        width: 514px;
-        height: 552px;
-    }
 
     &__title {
         display: flex;
@@ -213,9 +209,6 @@ const confirmOK = () => {
 
             color: #9d9d9d;
 
-            @include laptop() {
-                font-size: 19px;
-            }
         }
     }
     &__input-box {
@@ -235,9 +228,6 @@ const confirmOK = () => {
 
         gap: 8px;
 
-        @include laptop() {
-            margin: 18px 0 18px 112px;
-        }
 
         &__input {
             width: 18px;
